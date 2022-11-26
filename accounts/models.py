@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User, BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 # Create your models here.
 class AccountManager(BaseUserManager):
@@ -31,3 +31,26 @@ class AccountManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
 
+class UserAccount(AbstractBaseUser):
+    username =      models.CharField(unique=True, max_length=128, null=False)
+    email =         models.EmailField(unique=True, null=False)
+    date_joined =   models.DateTimeField(auto_now_add=True)
+    is_active =     models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', ]
+
+    objects = AccountManager()
+
+    def __str__(self):
+        return self.username
+
+    def has_perm(self, perm, obj=None):
+        """Checks if the user has any permissions"""
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        """Checks if the user has permission to view the app 'app_label'"""
+        return True
+    def __str__(self):
+        return self.username
