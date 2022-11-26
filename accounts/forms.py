@@ -10,7 +10,7 @@ class SignUpForm(forms.ModelForm):
 class SignInForm(forms.ModelForm):
     class Meta:
         model = UserAccount
-        fields = ['email', ]
+        fields = ['email', 'password']
 
     def clean(self):
         email = self.cleaned_data.get('email').lower()
