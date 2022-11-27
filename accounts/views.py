@@ -19,7 +19,9 @@ def sign_up(request):
         signup_form = forms.SignUpForm(request.POST)
         if signup_form.is_valid():
             print('Valid asf')
-            user = signup_form.save()
+            user = signup_form.save(commit=False)
+            user.is_active = False
+            user.save()
             current_site = get_current_site(request)
             subject = 'Activate your account'
             message = render_to_string('accounts/activation_request.html', {
