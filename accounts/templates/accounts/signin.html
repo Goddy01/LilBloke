@@ -8,7 +8,7 @@
 				<div class="col-12">
 					<div class="sign__content">
 						<!-- authorization form -->
-						<form action="#" class="sign__form">
+						<form action="{% url 'accounts:sign_in' %}" class="sign__form" method="post">
 							<a href="index.html" class="sign__logo">
 								<img src="{% static 'img/logo.svg' %}" alt="">
 							</a>
@@ -26,7 +26,7 @@
 								<label for="remember">Remember Me</label>
 							</div>
 							
-							<button class="sign__btn" type="button">Sign in</button>
+							<button class="sign__btn" type="submit">Sign in</button>
 
 							<span class="sign__text">Don't have an account? <a href="{% url 'accounts:sign_up' %}">Sign up!</a></span>
 
