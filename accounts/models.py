@@ -35,7 +35,7 @@ class UserAccount(AbstractBaseUser):
     username =              models.CharField(unique=True, max_length=128, null=False)
     email =                 models.EmailField(unique=True, null=False)
     date_joined =           models.DateTimeField(auto_now_add=True)
-    is_active =             models.BooleanField(default=True)
+    is_active =             models.BooleanField(default=False)
     signup_confirmation =   models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
