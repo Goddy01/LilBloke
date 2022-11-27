@@ -32,8 +32,8 @@ def sign_up(request):
             send_mail(subject, message, from_email, to_email, fail_silently=True)
             return redirect('activation_sent')
     else:
-        singup_form = forms.SignUpForm()
-    return render(request, 'accounts/signup.html')
+        signup_form = forms.SignUpForm()
+    return render(request, 'accounts/signup.html', {'signup_form': signup_form})
 
 def sign_in(request):
     return render(request, 'accounts/signin.html')
