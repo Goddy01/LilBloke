@@ -31,10 +31,7 @@ def sign_up(request):
             to_email = [signup_form.cleaned_data.get('email')]
             from_email = settings.EMAIL_HOST_USER
             send_mail(subject, message, from_email, to_email, fail_silently=True)
-            print('YAYY')
             return redirect('accounts:activation_sent')
-        else:
-            print('Shit is not valid.')
     else:
         signup_form = forms.SignUpForm()
     return render(request, 'accounts/signup.html', {'signup_form': signup_form})
@@ -43,8 +40,8 @@ def sign_in(request):
     if request.method == 'POST':
         signin_form = forms.SignInForm(request.POST)
         if signin_form.is_valid():
-            email = signin_form.validated_data.get('email').lower()
-            password = signin_form.validated_data.get('password')
+            email = request.POST['email'].lower()
+            password = request.POST['password']
             user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
