@@ -32,7 +32,7 @@ def sign_up(request):
             from_email = settings.EMAIL_HOST_USER
             send_mail(subject, message, from_email, to_email, fail_silently=True)
             print('YAYY')
-            return redirect('accounts: activation_sent')
+            return redirect('accounts:activation_sent')
         else:
             print('Shit is not valid.')
     else:
@@ -53,7 +53,7 @@ def activate_account(request, uidb64, token):
         # if valid set active true 
         user.is_active = True
         # set signup_confirmation true
-        user.profile.signup_confirmation = True
+        user.signup_confirmation = True
         user.save()
         login(request, user)
         # return redirect('home')
