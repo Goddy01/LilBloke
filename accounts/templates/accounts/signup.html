@@ -8,13 +8,13 @@
 				<div class="col-12">
 					<div class="sign__content">
 						<!-- registration form -->
-						<form action="#" class="sign__form">
+						<form action="{% url 'accounts:sign_up' %}" class="sign__form" method="post">
 							<a href="index.html" class="sign__logo">
 								<img src="{% static 'img/logo.svg' %}" alt="">
 							</a>
 
 							<div class="sign__group">
-								<input type="text" class="sign__input" placeholder="Name" name="username" id="username">
+								<input type="text" class="sign__input" placeholder="Username" name="username" id="username">
 							</div>
 
 							<div class="sign__group">
