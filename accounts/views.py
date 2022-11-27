@@ -28,11 +28,11 @@ def sign_up(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            to_email = signup_form.cleaned_data.get('email')
+            to_email = [signup_form.cleaned_data.get('email')]
             from_email = settings.EMAIL_HOST_USER
             send_mail(subject, message, from_email, to_email, fail_silently=True)
             print('YAYY')
-            return redirect('activation_sent')
+            return redirect('accounts: activation_sent')
         else:
             print('Shit is not valid.')
     else:
