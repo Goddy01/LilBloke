@@ -24,6 +24,7 @@
 					<div class="sign__content">
 						<!-- registration form -->
 						<form action="{% url 'accounts:sign_up' %}" class="sign__form" method="post">
+                            {% csrf_token %}
 							<a href="index.html" class="sign__logo">
 								<img src="{% static 'img/logo.svg' %}" alt="">
 							</a>
