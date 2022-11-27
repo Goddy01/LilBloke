@@ -18,6 +18,7 @@ def sign_up(request):
     if request.method == 'POST':
         signup_form = forms.SignUpForm(request.POST)
         if signup_form.is_valid():
+            print('Valid asf')
             user = signup_form.save()
             current_site = get_current_site(request)
             subject = 'Activate your account'
@@ -30,7 +31,10 @@ def sign_up(request):
             to_email = signup_form.cleaned_data.get('email')
             from_email = settings.EMAIL_HOST_USER
             send_mail(subject, message, from_email, to_email, fail_silently=True)
+            print('YAYY')
             return redirect('activation_sent')
+        else:
+            print('Shit is not valid.')
     else:
         signup_form = forms.SignUpForm()
     return render(request, 'accounts/signup.html', {'signup_form': signup_form})
