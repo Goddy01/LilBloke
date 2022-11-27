@@ -40,7 +40,18 @@ def sign_up(request):
     return render(request, 'accounts/signup.html', {'signup_form': signup_form})
 
 def sign_in(request):
-    return render(request, 'accounts/signin.html')
+    if request.method == 'POST':
+        signin_form = forms.SignInForm(request.POST)
+        if signin_form.is_valid():
+            email = signin_form.validated_data.get('email').lower()
+            password = signin_form.validated_data.get('password')
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponse('Login Successful!')
+    else:
+        signin_form = forms.SignInForm()
+    return render(request, 'accounts/signin.html', {'signin_form': signin_form})
 
 def activate_account(request, uidb64, token):
     try:
