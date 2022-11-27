@@ -11,6 +11,9 @@ from django.core.mail import send_mail
 from .models import UserAccount
 
 # Create your views here.
+def activation_sent_view(request):
+    return render(request, 'accounts/activation_sent.html')
+
 def sign_up(request):
     if request.method == 'POST':
         signup_form = forms.SignUpForm(request.POST)
