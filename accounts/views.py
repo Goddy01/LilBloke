@@ -47,7 +47,7 @@ def sign_in(request):
             user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponse('Login Successful!')
+                return redirect('home')
     else:
         signin_form = forms.SignInForm()
     return render(request, 'accounts/signin.html', {'signin_form': signin_form})
@@ -66,7 +66,6 @@ def activate_account(request, uidb64, token):
         user.signup_confirmation = True
         user.save()
         login(request, user)
-        # return redirect('home')
-        return HttpResponse('Success')
+        return redirect('home')
     else:
         return render(request, 'accounts/activation_invalid.html')
