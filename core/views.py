@@ -10,10 +10,10 @@ def grid_catalog(request):
 def list_catalog(request):
     return render(request, 'catalog2.html')
 
-def movie_detail(request):
+def movie_details(request):
     return render(request, 'details1.html')
 
-def tv_series_detail(request):
+def tv_series_details(request):
     return render(request, 'details2.html')
 
 def pricing(request):
