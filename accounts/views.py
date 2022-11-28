@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from . import forms
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -9,6 +9,7 @@ from .tokens import account_activation_token
 from django.conf import settings
 from django.core.mail import send_mail
 from .models import UserAccount
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def activation_sent_view(request):
@@ -69,3 +70,8 @@ def activate_account(request, uidb64, token):
         return redirect('home')
     else:
         return render(request, 'accounts/activation_invalid.html')
+
+@login_required
+def sign_out(request):
+    logout(request)
+    return redirect('home')
