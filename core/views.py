@@ -16,7 +16,7 @@ def movie_details(request):
 def tv_series_details(request):
     return render(request, 'details2.html')
 
-def pricing(request):
+def pricing_plan(request):
     return render(request, 'pricing.html')
 
 def faq(request):
