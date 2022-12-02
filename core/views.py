@@ -8,6 +8,8 @@ TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
 def tv_series_search(request, q=None):
     query = request.GET.get('q')
+    request.session['query'] = query
+    query = request.session['query']
     if query:
         tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
 
@@ -24,6 +26,8 @@ def tv_series_search(request, q=None):
 
 def movies_search(request, q):
     query = request.GET.get('q')
+    request.session['query'] = query
+    query = request.session['query']
     if query:
         movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
 

@@ -17,10 +17,10 @@
     }
 </style>
 <div class="catalog">
-    <h2 id="search__result">Search results for: '{{ query }}'</h2>
+    <h2 id="search__result">Search results for: '{{ request.session.query }}'</h2>
     <div class="search__results" style="color: white;">
         <p><a href="{% url 'tv_series_search' %}" class="btn">TV Series - {{ tv_data_count }}</a></p>
-        <p><a href="{% url 'movies_search' query %}" class="btn">Movies - {{ movies_data_count }}</a></p>
+        <p><a href="{% url 'movies_search' request.session.query %}" class="btn">Movies - {{ movies_data_count }}</a></p>
     </div>
     <div class="container">
         <div class="row">
