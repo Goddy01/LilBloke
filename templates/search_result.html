@@ -20,15 +20,15 @@
     <button type="submit">Movies {{}}</button>
     <div class="container">
         <div class="row">
-            {% for d in data.results %}
+            {% for tv_datum in tv_data.results %}
             <!-- card -->
             <div class="col-6 col-sm-12 col-lg-6">
                 <div class="card card--list">
                     <div class="row">
                         <div class="col-12 col-sm-4">
                             <div class="card__cover">
-                                {% if d.poster_path %}
-                                <img src="https://image.tmdb.org/t/p/w500/{{ d.poster_path }}" alt="">
+                                {% if tv_datum.poster_path %}
+                                <img src="https://image.tmdb.org/t/p/w500/{{ tv_datum.poster_path }}" alt="">
                                 {% else %}
                                 <img src="{% static 'img/covers/not-available.jpg' %}" alt="Poster Not Available">
                                 {% endif %}
@@ -40,10 +40,10 @@
 
                         <div class="col-12 col-sm-8">
                             <div class="card__content">
-                                <h3 class="card__title"><a href="#">{{ d.name }}</a></h3>
+                                <h3 class="card__title"><a href="#">{{ tv_datum.name }}</a></h3>
                                 <span class="card__category">
-                                {% if d.genre_ids %}
-                                {% for i in d.id|tv_genre_extractor %}
+                                {% if tv_datum.genre_ids %}
+                                {% for i in tv_datum.id|tv_genre_extractor %}
                                     <a href="#">{{ i }}</a>
                                 {% endfor %}
                                 {% else %}
@@ -52,7 +52,7 @@
                                 </span>
 
                                 <div class="card__wrap">
-                                    <span class="card__rate"><i class="icon ion-ios-star"></i>{{ d.vote_average }}</span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>{{ tv_datum.vote_average }}</span>
 
                                     <!-- <ul class="card__list">
                                         <li>HD</li>
@@ -61,8 +61,8 @@
                                 </div>
 
                                 <div class="card__description" style="color: white;">
-                                    {% if d.overview %}
-                                    <p>{{ d.overview }}</p>
+                                    {% if tv_datum.overview %}
+                                    <p>{{ tv_datum.overview }}</p>
                                     {% else %}
                                     <p>Overview not provided</p>
                                     {% endif %}
