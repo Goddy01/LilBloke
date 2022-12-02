@@ -6,12 +6,16 @@ load_dotenv(find_dotenv())
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
-def tv_series_search(request):
+def tv_series_search(request, q=None):
     query = request.GET.get('q')
     if query:
         tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
 
         movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
+    elif q:
+        tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
+
+        movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
     else:
         return redirect('404')
     # genres = requests.get(f"https://api.themoviedb.org/3/genre/tv/list?api_key={TMDB_API_KEY}")
