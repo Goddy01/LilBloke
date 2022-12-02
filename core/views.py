@@ -9,23 +9,29 @@ TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 def tv_series_search(request):
     query = request.GET.get('q')
     if query:
-        tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}")
-        
-        movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}")
+        tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
+
+        movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
     else:
         return redirect('404')
     # genres = requests.get(f"https://api.themoviedb.org/3/genre/tv/list?api_key={TMDB_API_KEY}")
 
-    return render(request, 'search_result.html', {'tv_data':tv_data.json(), 'query': query})
+    return render(request, 'search_result.html', {'data':tv_data, 'query': query, 'tv_data_count': len(tv_data["results"]), 'movies_data_count': len(movies_data["results"])})
 
-def movies_search(request):
+def movies_search(request, q):
     query = request.GET.get('q')
     if query:
-        movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}")
+        movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
+
+        tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
+    elif q:
+        movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
+
+        tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
     else:
         return redirect('404')
 
-    return render(request, 'search_result.html', {'movies_data': movies_data.json(), 'query': query})
+    return render(request, 'search_result.html', {'data': movies_data, 'query': query, 'movies_data_count': len(movies_data["results"]), 'tv_data_count': len(tv_data["results"])})
 
 def home(request):
     return render(request, 'core/index.html')

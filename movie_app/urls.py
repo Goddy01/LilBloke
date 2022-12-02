@@ -31,4 +31,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', 'accounts')),
     path('core/', include('core.urls', 'core')),
     path('tv-series-search/', views.tv_series_search, name='tv_series_search'),
+    path('movies-search/<q>/', views.movies_search, name='movies_search'),
 ]
