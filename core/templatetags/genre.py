@@ -15,11 +15,11 @@ def tv_genre_extractor(tv_id):
 
     return genres_list
 
-@register.filter
-def movie_genre_extractor(movie_id):
-    movie = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}").json()
+# @register.filter
+# def movie_genre_extractor(movie_id):
+#     movie = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}").json()
 
-    genres = movie['genres']
-    genres_list = [g['name'] for g in genres]
+#     genres = movie['genres']
+#     genres_list = [g['name'] for g in genres]
 
-    return genres_list
+    # return genres_list
