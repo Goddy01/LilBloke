@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv, find_dotenv
-import os
+import os, requests
 
 load_dotenv(find_dotenv())
 
@@ -9,11 +9,10 @@ TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 def tv_series_search(request):
     query = request.GET.get('q')
     if query:
-        data = request.GET.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false?query={query}")
-        print('QUERY RESULT:', data)
+        data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}")
     else:
         return redirect('404')
-    return render(request, 'search_result.html', {'data':data})
+    return render(request, 'search_result.html', {'data':data.json(), 'query': query})
 
 # def search_resukt(request):
 #     return render(request, 'search_result.html')
