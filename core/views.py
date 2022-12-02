@@ -14,15 +14,19 @@ def tv_series_search(request, q=None):
         tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
 
         movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
-    elif q:
-        tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
-
-        movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
     else:
         return redirect('404')
     # genres = requests.get(f"https://api.themoviedb.org/3/genre/tv/list?api_key={TMDB_API_KEY}")
 
     return render(request, 'search_result.html', {'data':tv_data, 'query': query, 'tv_data_count': len(tv_data["results"]), 'movies_data_count': len(movies_data["results"])})
+
+def tv_series_view(request):
+    q = request.session['query']
+    tv_data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
+
+    movies_data = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={q}").json()
+
+    return render(request, 'search_result.html', {'data':tv_data, 'query': q, 'tv_data_count': len(tv_data["results"]), 'movies_data_count': len(movies_data["results"])})
 
 def movies_search(request, q):
     query = request.GET.get('q')
