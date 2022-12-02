@@ -1,6 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from dotenv import load_dotenv, find_dotenv
+import os
 
+load_dotenv(find_dotenv())
+
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
+def tv_series_search(request):
+    query = request.GET.get('query')
+    if query:
+        data = request.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false?query={query}")
+    else:
+        return redirect('404')
+    return render(request, 'base.html')
+
 def home(request):
     return render(request, 'core/index.html')
 
