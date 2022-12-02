@@ -12,7 +12,9 @@ def tv_series_search(request):
         data = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}")
     else:
         return redirect('404')
-    return render(request, 'search_result.html', {'data':data.json(), 'query': query})
+    genres = requests.get(f"https://api.themoviedb.org/3/genre/movie/list?api_key={TMDB_API_KEY}")
+    print('GENRES: ', genres.json())
+    return render(request, 'search_result.html', {'data':data.json(), 'query': query, 'genres': genres})
 
 # def search_resukt(request):
 #     return render(request, 'search_result.html')

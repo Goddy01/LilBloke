@@ -39,7 +39,8 @@
                             <div class="card__content">
                                 <h3 class="card__title"><a href="#">{{ d.name }}</a></h3>
                                 <span class="card__category">
-                                    <a href="#">Thriller</a>
+                                    <a href="#">{% with genres=d.genre_ids %}{{genres}}{% endwith %}</a>
+                                    <h1>e</h1>
                                 </span>
 
                                 <div class="card__wrap">
