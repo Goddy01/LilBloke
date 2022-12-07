@@ -23,7 +23,6 @@ urlpatterns = [
     path('grid-catalog/', views.grid_catalog, name='grid_catalog'),
     path('list-catalog/', views.list_catalog, name='list_catalog'),
     # path('movie-details/', views.movie_details, name='movie_details'),
-    path('tv-series-details/', views.tv_series_details, name='tv_series_details'),
     path('pricing-plan/', views.pricing_plan, name='pricing_plan'),
     path('faq/', views.faq, name='faq'),
     path('about/', views.about, name='about'),
@@ -32,4 +31,5 @@ urlpatterns = [
     path('core/', include('core.urls', 'core')),
     path('search/', views.movies_search, name='movies_search'),
     path('movie/<movie_id>/', views.movie_details, name='movie_details'),
+    path('tv/<tv_id>/', views.tv_details, name='tv_details'),
 ]

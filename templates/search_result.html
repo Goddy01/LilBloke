@@ -46,7 +46,7 @@
                                         {{ datum.original_title }}
                                     </a>
                                     {% else %}
-                                    <a href="#">
+                                    <a href="{% url 'tv_details' datum.id %}">
                                         {{ datum.original_name }}
                                     </a>
                                     {% endif %}

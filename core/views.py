@@ -23,6 +23,11 @@ def movie_details(request, movie_id):
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
     # return JsonResponse(data.json())
     return render(request, 'details1.html', {'data': data.json()})
+
+def tv_details(request, tv_id):
+    data = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key={TMDB_API_KEY}&language=en-US")
+    return render(request, 'details2.html', {'data': data.json()})
+
 def home(request):
     return render(request, 'core/index.html')
 
@@ -31,12 +36,6 @@ def grid_catalog(request):
 
 def list_catalog(request):
     return render(request, 'catalog2.html')
-
-# def movie_details(request):
-#     return render(request, 'details1.html')
-
-def tv_series_details(request):
-    return render(request, 'details2.html')
 
 def pricing_plan(request):
     return render(request, 'pricing.html')
