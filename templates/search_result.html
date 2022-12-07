@@ -42,9 +42,13 @@
                             <div class="card__content">
                                 <h3 class="card__title"><a href="#">
                                     {% if request.GET.type == 'movie' %}
+                                    <a href="{% url 'movie_details' datum.id %}">
                                         {{ datum.original_title }}
+                                    </a>
                                     {% else %}
+                                    <a href="#">
                                         {{ datum.original_name }}
+                                    </a>
                                     {% endif %}
                                 </a></h3>
                                 <span class="card__category">
