@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv, find_dotenv
 import os, requests
+from django.http import JsonResponse
 
 load_dotenv(find_dotenv())
 
@@ -16,9 +17,11 @@ def movies_search(request, q=None):
         return redirect('404')
     # genres = requests.get(f"https://api.themoviedb.org/3/genre/tv/list?api_key={TMDB_API_KEY}")
 
-    return render(request, 'search_result.html', {'data':movies_data, 'query': query})
+    return render(request, 'search_result.html', {'data': movies_data, 'query': query, 'type': request.GET.get('type')})
 
-
+def movie_details(request, movie_id):
+    data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
+    return JsonResponse(data.json())
 def home(request):
     return render(request, 'core/index.html')
 
