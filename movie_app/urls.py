@@ -30,7 +30,5 @@ urlpatterns = [
     path('404/', views.error_404, name='404'),
     path('accounts/', include('accounts.urls', 'accounts')),
     path('core/', include('core.urls', 'core')),
-    path('tv-series-search/', views.tv_series_search, name='tv_series_search'),
-    path('tv-series-search/2/', views.tv_series_search, name='tv_series_search_2'),
-    path('movies-search/<q>/', views.movies_search, name='movies_search'),
+    path('search/', views.movies_search, name='movies_search'),
 ]
