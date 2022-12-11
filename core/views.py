@@ -21,9 +21,9 @@ def movies_search(request, q=None):
 
 def movie_details(request, movie_id):
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
-    video = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}&language=en-US").json()
+    movie = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]
     # return JsonResponse(data.json())
-    return render(request, 'details1.html', {'data': data.json(), 'video': video})
+    return render(request, 'details1.html', {'data': data.json(), 'movie': movie})
 
 
 def tv_details(request, tv_id):
