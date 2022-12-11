@@ -100,10 +100,11 @@
                         {% for season in data.seasons %}
 						<div class="accordion__card">
 							<div class="card-header" id="headingOne">
-								<button type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								<a href="{% url 'tv_episodes' data.id season.season_number  %}" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    
 									<span>Season: {{ season.season_number }}</span>
 									<span>{{ season.episode_count }} Episodes Started Airing on {{ season.air_date }}</span>
-								</button>
+                                </a>
 							</div>
 
 							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">

@@ -31,10 +31,10 @@ def tv_details(request, tv_id):
     episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US&append_to_response=all")
     return render(request, 'details2.html', {'data': data, 'episodes': episodes})
 
-def tv_episodes(request, tv_id, season_number, episode_number):
-    episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}/episode/{episode_number}?api_key={TMDB_API_KEY}&language=en-US").json()
+def tv_episodes(request, tv_id, season_number):
+    episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key={TMDB_API_KEY}&language=en-US").json()
     return JsonResponse(data=episodes, safe=False)
-    
+
 def home(request):
     return render(request, 'core/index.html')
 
