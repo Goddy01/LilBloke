@@ -100,14 +100,13 @@
                         {% for season in data.seasons %}
 						<div class="accordion__card">
 							<div class="card-header" id="headingOne">
-								<a href="{% url 'tv_episodes' data.id season.season_number  %}" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    
+								<button type="button" data-toggle="collapse" data-target="#collapse{{ season.id }}" aria-expanded="true" aria-controls="collapse{{ season.id }}">
 									<span>Season: {{ season.season_number }}</span>
 									<span>{{ season.episode_count }} Episodes Started Airing on {{ season.air_date }}</span>
-                                </a>
+                                </button>
 							</div>
 
-							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+							<div id="collapse{{ season.id }}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 								<div class="card-body">
 									<table class="accordion__list">
 										<thead>
@@ -119,12 +118,16 @@
 										</thead>
 
 										<tbody>
-                                            {% for episode in episode_groups.results %}
-											<tr>
-												<th>{{ episode }}</th>
-												<td>Pilot</td>
-												<td>Tuesday, November 16th, 2004</td>
+                                            {% for key, value in seasons.items %}
+                                            {% if key == season.season_number|slugify %}
+											{% for episode in value.episodes %}
+                                            <tr>
+												<th>{{ episode.episode_number }}</th>
+												<td>{{ episode.name }}</td>
+												<td>{{ episode.air_date }}</td>
 											</tr>
+                                            {% endfor %}
+                                            {% endif %}
                                             {% endfor %}
 										</tbody>
 									</table>

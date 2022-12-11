@@ -27,13 +27,17 @@ def movie_details(request, movie_id):
 
 
 def tv_details(request, tv_id):
+    context = {}
+    seasons = {}
     data = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key={TMDB_API_KEY}&language=en-US").json()
-    episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US&append_to_response=all")
-    return render(request, 'details2.html', {'data': data, 'episodes': episodes})
-
-def tv_episodes(request, tv_id, season_number):
-    episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key={TMDB_API_KEY}&language=en-US").json()
-    return JsonResponse(data=episodes, safe=False)
+    # episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US&append_to_response=all")
+    for season in data['seasons']:
+        season = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/season/{season['season_number']}?api_key={TMDB_API_KEY}&language=en-US").json()
+        print('SEASONS: ', seasons)
+        seasons[f"{season['season_number']}"] = season
+    context['seasons'] = seasons
+    context['data'] = data
+    return render(request, 'details2.html', context)
 
 def home(request):
     return render(request, 'core/index.html')

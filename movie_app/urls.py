@@ -32,5 +32,4 @@ urlpatterns = [
     path('search/', views.movies_search, name='movies_search'),
     path('movie/<movie_id>/', views.movie_details, name='movie_details'),
     path('tv/<tv_id>/', views.tv_details, name='tv_details'),
-    path('tv/<tv_id>/<season_number>/', views.tv_details, name='tv_episodes'),
 ]
