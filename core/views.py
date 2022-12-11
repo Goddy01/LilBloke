@@ -39,6 +39,10 @@ def tv_details(request, tv_id):
     context['data'] = data
     return render(request, 'details2.html', context)
 
+def tv_video(request, tv_id, season_number, episode_number):
+    video = requests.get("https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}/episode/{episode_number}/videos?api_key={TMDB_API_KEY}&language=en-US").json()
+    return render(request, 'details2.html', {'video': video})
+
 def home(request):
     return render(request, 'core/index.html')
 
