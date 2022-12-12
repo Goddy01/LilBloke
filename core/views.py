@@ -40,20 +40,9 @@ def tv_details(request, tv_id):
     context['data'] = data
     return render(request, 'details2.html', context)
 
-# def tv_video(request, tv_id, season_number, episode_number):
-#     context = {}
-#     seasons = {}
-#     data = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key={TMDB_API_KEY}&language=en-US").json()
-#     video = requests.get("https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}/episode/{episode_number}/videos?api_key={TMDB_API_KEY}&language=en-US").json()
-#     context['video_key'] = video['results'][0]['key']
-#     # episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US&append_to_response=all")
-#     for season in data['seasons']:
-#         season = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/season/{season['season_number']}?api_key={TMDB_API_KEY}&language=en-US").json()
-#         print('SEASONS: ', seasons)
-#         seasons[f"{season['season_number']}"] = season
-#     context['seasons'] = seasons
-#     context['data'] = data
-#     return render(request, 'details2.html', context)
+def get_latest_movies(request):
+    latest_movies = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US")
+    return render(request, 'core/index.html', {'latest_movies': latest_movies})
 
 def home(request):
     return render(request, 'core/index.html')
