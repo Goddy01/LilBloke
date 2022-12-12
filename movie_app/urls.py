@@ -33,4 +33,5 @@ urlpatterns = [
     path('movie/<movie_id>/', views.movie_details, name='movie_details'),
     path('tv/<tv_id>/', views.tv_details, name='tv_details'),
     path('movie/latest/', views.get_latest_movies, name='latest_movies'),
+    path('tv/latest/', views.get_latest_tv_shows, name='latest_tv_shows'),
 ]
