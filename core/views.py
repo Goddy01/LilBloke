@@ -44,6 +44,10 @@ def get_latest_movies(request):
     latest_movies = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US")
     return render(request, 'core/index.html', {'latest_movies': latest_movies})
 
+def get_latest_tv_shows(request):
+    latest_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/latest?api_key={TMDB_API_KEY}&language=en-US")
+    return render(request, 'core/index.html', {'latest_tv_shows': latest_tv_shows})
+
 def home(request):
     return render(request, 'core/index.html')
 
