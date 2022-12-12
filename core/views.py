@@ -7,6 +7,24 @@ load_dotenv(find_dotenv())
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
+def home(request):
+    latest_movies = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US")
+    latest_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/latest?api_key={TMDB_API_KEY}&language=en-US")
+    popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
+    popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
+    animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16")
+    upcoming_movies = requests.get(f"https://api.themoviedb.org/3/movie/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1")
+    upcoming_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1")
+    return render(request, 'core/index.html', {
+        'latest_movies': latest_movies,
+        'latest_tv_shows': latest_tv_shows,
+        'popular_movies': popular_movies,
+        'populat_tv_shows': popular_tv_shows,
+        'animation_movies': animation_movies,
+        'upcoming_movies': upcoming_movies,
+        'upcoming_tv_shows': upcoming_tv_shows,
+        })
+
 def movies_search(request, q=None):
     query = request.GET.get('q')
     request.session['query'] = query
@@ -67,9 +85,6 @@ def get_upcoming_movies(request):
 def get_upcoming_tv_shows(request):
     upcoming_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1")
     return render(request, 'core/index.html', {'upcoming_tv_shows': upcoming_tv_shows})
-
-def home(request):
-    return render(request, 'core/index.html')
 
 def grid_catalog(request):
     return render(request, 'catalog1.html')
