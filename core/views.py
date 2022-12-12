@@ -48,6 +48,10 @@ def get_latest_tv_shows(request):
     latest_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/latest?api_key={TMDB_API_KEY}&language=en-US")
     return render(request, 'core/index.html', {'latest_tv_shows': latest_tv_shows})
 
+def get_popular_movies(request):
+    popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
+    return render(request, 'core/index.html', {'popular_movies': popular_movies})
+
 def home(request):
     return render(request, 'core/index.html')
 
