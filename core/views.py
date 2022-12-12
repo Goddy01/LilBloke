@@ -1,20 +1,22 @@
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv, find_dotenv
-import os, requests
+import os, requests, http, socket
 from django.http import JsonResponse
+from datetime import date
 
 load_dotenv(find_dotenv())
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
 def home(request):
-    latest_movies = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US")
-    latest_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/latest?api_key={TMDB_API_KEY}&language=en-US")
-    popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
-    popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
-    animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16")
-    upcoming_movies = requests.get(f"https://api.themoviedb.org/3/movie/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1")
-    upcoming_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1")
+    latest_movie = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US").json()
+    latest_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&include_video=false&primary_release_date.lte={date.today()}").json()
+    latest_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/latest?api_key={TMDB_API_KEY}&language=en-US").json()
+    popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
+    popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
+    animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16").json()
+    upcoming_movies = requests.get(f"https://api.themoviedb.org/3/movie/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
+    upcoming_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     return render(request, 'core/index.html', {
         'latest_movies': latest_movies,
         'latest_tv_shows': latest_tv_shows,
@@ -39,9 +41,11 @@ def movies_search(request, q=None):
 
 def movie_details(request, movie_id):
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
-    movie = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]
-    # return JsonResponse(data.json())
-    return render(request, 'details1.html', {'data': data.json(), 'movie': movie})
+    try:
+        movie_key = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]['key']
+    except:
+        movie_key = None
+    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key})
 
 
 def tv_details(request, tv_id):

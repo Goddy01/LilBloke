@@ -1,5 +1,5 @@
-
 {% extends 'base.html' %}
+{% load genre %}
 {% load static %}
 {% block title %}Home{% endblock title %}
 {% block content %}
@@ -29,26 +29,33 @@
 
 				<div class="col-12">
 					<div class="owl-carousel home__carousel">
+                        {% for latest_movie in latest_movies.results %}
 						<div class="item">
 							<!-- card -->
 							<div class="card card--big">
 								<div class="card__cover">
-									<img src="{% static 'img/covers/cover.jpg' %}" alt="">
+									<img src="https://image.tmdb.org/t/p/w500/{{ latest_movie.poster_path }}" alt="">
 									<a href="#" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>
 								<div class="card__content">
-									<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
+									<h3 class="card__title"><a href="{% url 'movie_details' latest_movie.id %}">{{ latest_movie.title }}</a></h3>
 									<span class="card__category">
-										<a href="#">Action</a>
-										<a href="#">Triler</a>
+										{% if latest_movie.genre_ids %}
+                                            {% for i in latest_movie.id|movie_genre_extractor %}
+                                                <a href="#">{{ i }}</a>
+                                            {% endfor %}
+                                        {% else %}
+                                            <a>Genre not available</a>
+                                        {% endif %}
 									</span>
-									<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+									<span class="card__rate"><i class="icon ion-ios-star"></i>{{ latest_movie.vote_average }}</span>
 								</div>
 							</div>
 							<!-- end card -->
 						</div>
+                        {% endfor %}
 					</div>
 				</div>
 			</div>
