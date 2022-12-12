@@ -36,4 +36,5 @@ urlpatterns = [
     path('tv/latest/', views.get_latest_tv_shows, name='latest_tv_shows'),
     path('movie/popular/', views.get_popular_movies, name='popular_movies'),
     path('tv/popular/', views.get_popular_tv_shows, name='popular_tv_shows'),
+    path('movie/genre/animation/', views.get_animation_movies, name='animation_movies'),
 ]
