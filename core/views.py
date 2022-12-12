@@ -52,6 +52,10 @@ def get_popular_movies(request):
     popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
     return render(request, 'core/index.html', {'popular_movies': popular_movies})
 
+def get_popular_tv_shows(request):
+    popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
+    return render(request, 'core/index.html', {'popular_tv_shows': popular_tv_shows})
+
 def home(request):
     return render(request, 'core/index.html')
 
