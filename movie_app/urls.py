@@ -32,5 +32,5 @@ urlpatterns = [
     path('search/', views.movies_search, name='movies_search'),
     path('movie/<movie_id>/', views.movie_details, name='movie_details'),
     path('tv/<tv_id>/', views.tv_details, name='tv_details'),
-    # path('tv/<tv_id>/season/<season_number>/episode/<episode_number>/videos/', views.tv_video, name='tv_video'),
+    path('movie/latest/', views.get_latest_movies, name='latest_movies'),
 ]
