@@ -32,9 +32,15 @@
                                 {% else %}
                                 <img src="{% static 'img/covers/not-available.jpg' %}" alt="Poster Not Available">
                                 {% endif %}
-                                <a href="#" class="card__play">
+                                {% if request.GET.type == 'movie' %}
+                                <a href="{% url 'movie_details' datum.id %}" class="card__play">
                                     <i class="icon ion-ios-play"></i>
                                 </a>
+                                {% else %}
+                                <a href="{% url 'tv_details' datum.id %}" class="card__play">
+                                    <i class="icon ion-ios-play"></i>
+                                </a>
+                                {% endif %}
                             </div>
                         </div>
 

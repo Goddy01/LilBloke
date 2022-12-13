@@ -38,7 +38,7 @@
 							<div class="col-12 col-sm-4">
 								<div class="card__cover">
 									<img src="https://image.tmdb.org/t/p/w500/{{ popular_tv_show.poster_path }}" alt="">
-									<a href="#" class="card__play">
+									<a href="{% url 'tv_details' popular_tv_show.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>
