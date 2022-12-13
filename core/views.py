@@ -9,9 +9,9 @@ load_dotenv(find_dotenv())
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
 def home(request):
-    latest_movie = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US").json()
+    # latest_movie = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US").json()
     latest_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&include_video=false&primary_release_date.lte={date.today()}").json()
-    latest_tv_show = requests.get(f"https://api.themoviedb.org/3/tv/latest?api_key={TMDB_API_KEY}&language=en-US").json()
+    # latest_tv_show = requests.get(f"https://api.themoviedb.org/3/tv/latest?api_key={TMDB_API_KEY}&language=en-US").json()
     latest_tv_shows = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&include_video=false&primary_release_date.lte={date.today()}").json()
     popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
@@ -22,7 +22,7 @@ def home(request):
         'latest_movies': latest_movies,
         'latest_tv_shows': latest_tv_shows,
         'popular_movies': popular_movies,
-        'populat_tv_shows': popular_tv_shows,
+        'popular_tv_shows': popular_tv_shows,
         'animation_movies': animation_movies,
         'upcoming_movies': upcoming_movies,
         'upcoming_tv_shows': upcoming_tv_shows,
@@ -75,8 +75,8 @@ def get_latest_tv_shows(request):
     return render(request, 'core/index.html', {'latest_tv_shows': latest_tv_shows})
 
 def get_popular_movies(request):
-    popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
-    return render(request, 'core/index.html', {'popular_movies': popular_movies})
+    popular_movies = requests.get(f"https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
+    return render(request, 'core/popular_movies.html', {'popular_movies': popular_movies})
 
 def get_popular_tv_shows(request):
     popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page=1")
