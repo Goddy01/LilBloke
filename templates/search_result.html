@@ -63,7 +63,7 @@
                                         {% for i in datum.id|movie_genre_extractor %}
                                             <a href="#">{{ i }}</a>
                                         {% endfor %}
-                                    {% elif 'tv' in request.path %}
+                                    {% else %}
                                         {% for i in datum.id|tv_genre_extractor %}
                                             <a href="#">{{ i }}</a>
                                         {% endfor %}
