@@ -97,7 +97,7 @@ def get_upcoming_tv_shows(request):
     return render(request, 'core/index.html', {'upcoming_tv_shows': upcoming_tv_shows})
 
 def movies_catalog(request):
-    movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&include_video=false").json()
+    movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page=2").json()
     return render(request, 'catalog1.html', {'movies_catalog': movies_catalog})
     
 def grid_catalog(request):

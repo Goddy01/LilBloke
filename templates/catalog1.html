@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load genre %}
 {% block title %}Movies Catalog{% endblock title %}
 {% block content %}
 	<!-- page title -->
@@ -152,6 +153,7 @@
 		<div class="container">
 			<div class="row">
                 {% for movie in movies_catalog.results %}
+                
 				<!-- card -->
 				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 					<div class="card">

@@ -39,4 +39,5 @@ urlpatterns = [
     path('movie/genre/animation/', views.get_animation_movies, name='animation_movies'),
     path('movie/upcoming/', views.get_upcoming_movies, name='upcoming_movies'),
     path('tv/upcoming/', views.get_upcoming_tv_shows, name='upcoming_tv_shows'),
+    path('movies-catalog/', views.movies_catalog, name='movies_catalog'),
 ]
