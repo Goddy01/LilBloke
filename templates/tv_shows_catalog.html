@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load genre %}
-{% block title %}Movies Catalog{% endblock title %}
+{% block title %}Tv Shows Catalog{% endblock title %}
 {% block content %}
 	<!-- page title -->
 	<section class="section section--first section--bg" data-bg="{% static 'img/section/section.jpg' %}">
@@ -10,13 +10,13 @@
 				<div class="col-12">
 					<div class="section__wrap">
 						<!-- section title -->
-						<h2 class="section__title">Catalog Movies</h2>
+						<h2 class="section__title">Tv Shows Catalog</h2>
 						<!-- end section title -->
 
 						<!-- breadcrumb -->
 						<ul class="breadcrumb">
 							<li class="breadcrumb__item"><a href="{% url 'home' %}">Home</a></li>
-							<li class="breadcrumb__item breadcrumb__item--active">Movies Catalog</li>
+							<li class="breadcrumb__item breadcrumb__item--active">Tv Shows Catalog</li>
 						</ul>
 						<!-- end breadcrumb -->
 					</div>
@@ -30,7 +30,7 @@
 	<div class="filter">
 		<div class="container">
 			<div class="row">
-                <form action="{% url 'movies_catalog' %}" method="get">
+                <form action="{% url 'tv_shows_catalogs' %}" method="get">
 				<div class="col-12">
 					<div class="filter__content">
 						<div class="filter__items">
@@ -42,24 +42,21 @@
 									<span></span>
 								</div>
 								<select name="genre" id="" style="background-color: #FF5688;border: none;padding: 0.5rem;color: white;">
-                                    <option value="28">Action</option>
-                                    <option value="12">Adventure</option>
+                                    <option value="10759">Action & Adventure</option>
                                     <option value="16">Animation</option>
                                     <option value="35">Comedy</option>
                                     <option value="80">Crime</option>
                                     <option value="99">Documentary</option>
                                     <option value="18">Drama</option>
                                     <option value="10751">Family</option>
-                                    <option value="14">Fantasy</option>
-                                    <option value="36">History</option>
-                                    <option value="27">Horror</option>
-                                    <option value="10402">Music</option>
+                                    <option value="10762">Kids</option>
                                     <option value="9648">Mystery</option>
-                                    <option value="10749">Romance</option>
-                                    <option value="878">Science Fiction</option>
-                                    <option value="10770">Tv Movie</option>
-                                    <option value="53">Thriller</option>
-                                    <option value="10752">War</option>
+                                    <option value="10763">News</option>
+                                    <option value="10764">Reality</option>
+                                    <option value="10765">Sci-Fi & Fantasy</option>
+                                    <option value="10766">Soap</option>
+                                    <option value="10767">Talk</option>
+                                    <option value="10770">War & Politics</option>
                                     <option value="37">Western</option>
                                 </select>
 
@@ -82,30 +79,30 @@
 	<div class="catalog">
 		<div class="container">
 			<div class="row">
-                {% for movie in movies_catalog.results %}
+                {% for tv_show in tv_shows_catalogs.results %}
                 {% if not forloop.counter > 18 %}
                 
 				<!-- card -->
 				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 					<div class="card">
 						<div class="card__cover">
-							<img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="">
-							<a href="{% url 'movie_details' movie.id %}" class="card__play">
+							<img src="https://image.tmdb.org/t/p/w500/{{ tv_show.poster_path }}" alt="">
+							<a href="{% url 'tv_show_details' tv_show.id %}" class="card__play">
 								<i class="icon ion-ios-play"></i>
 							</a>
 						</div>
 						<div class="card__content">
-							<h3 class="card__title"><a href="{% url 'movie_details' movie.id %}">{{ movie.title }}</a></h3>
+							<h3 class="card__title"><a href="{% url 'tv_show_details' tv_show.id %}">{{ tv_show.title }}</a></h3>
 							<span class="card__category">
-								{% if movie.genre_ids %}
-                                    {% for i in movie.id|movie_genre_extractor %}
+								{% if tv_show.genre_ids %}
+                                    {% for i in tv_show.id|tv_show_genre_extractor %}
                                         <a>{{ i }}</a>
                                     {% endfor %}
                                 {% else %}
                                     <a>Genre not available</a>
                                 {% endif %}
 							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>{{ movie.vote_average }}</span>
+							<span class="card__rate"><i class="icon ion-ios-star"></i>{{ tv_show.vote_average }}</span>
 						</div>
 					</div>
 				</div>
