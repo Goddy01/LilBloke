@@ -18,6 +18,7 @@ def home(request):
     animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16").json()
     upcoming_movies = requests.get(f"https://api.themoviedb.org/3/movie/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     upcoming_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
+    print('UPCOMING TV SHOWS: ', upcoming_tv_shows)
     return render(request, 'core/index.html', {
         'latest_movies': latest_movies,
         'latest_tv_shows': latest_tv_shows,
