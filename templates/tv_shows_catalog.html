@@ -30,7 +30,7 @@
 	<div class="filter">
 		<div class="container">
 			<div class="row">
-                <form action="{% url 'tv_shows_catalogs' %}" method="get">
+                <form action="{% url 'tv_shows_catalog' %}" method="get">
 				<div class="col-12">
 					<div class="filter__content">
 						<div class="filter__items">
@@ -79,7 +79,7 @@
 	<div class="catalog">
 		<div class="container">
 			<div class="row">
-                {% for tv_show in tv_shows_catalogs.results %}
+                {% for tv_show in tv_shows_catalog.results %}
                 {% if not forloop.counter > 18 %}
                 
 				<!-- card -->
@@ -87,15 +87,15 @@
 					<div class="card">
 						<div class="card__cover">
 							<img src="https://image.tmdb.org/t/p/w500/{{ tv_show.poster_path }}" alt="">
-							<a href="{% url 'tv_show_details' tv_show.id %}" class="card__play">
+							<a href="{% url 'tv_details' tv_show.id %}" class="card__play">
 								<i class="icon ion-ios-play"></i>
 							</a>
 						</div>
 						<div class="card__content">
-							<h3 class="card__title"><a href="{% url 'tv_show_details' tv_show.id %}">{{ tv_show.title }}</a></h3>
+							<h3 class="card__title"><a href="{% url 'tv_details' tv_show.id %}">{{ tv_show.name }}</a></h3>
 							<span class="card__category">
 								{% if tv_show.genre_ids %}
-                                    {% for i in tv_show.id|tv_show_genre_extractor %}
+                                    {% for i in tv_show.id|tv_genre_extractor %}
                                         <a>{{ i }}</a>
                                     {% endfor %}
                                 {% else %}
