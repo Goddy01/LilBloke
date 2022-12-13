@@ -55,7 +55,7 @@ def tv_details(request, tv_id):
     context = {}
     seasons = {}
     data = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key={TMDB_API_KEY}&language=en-US").json()
-    # episodes = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US&append_to_response=all")
+    similar_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     for season in data['seasons']:
         season = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/season/{season['season_number']}?api_key={TMDB_API_KEY}&language=en-US").json()
         print('SEASONS: ', seasons)
@@ -64,6 +64,7 @@ def tv_details(request, tv_id):
         context['tv_movie'] = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]
     except:
         context['tv_movie'] = None
+    context['similar_tv_shows'] = similar_tv_shows
     context['seasons'] = seasons
     context['data'] = data
     return render(request, 'details2.html', context)
