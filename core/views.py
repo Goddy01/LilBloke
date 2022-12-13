@@ -47,7 +47,8 @@ def movie_details(request, movie_id):
         movie_key = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]['key']
     except:
         movie_key = None
-    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key})
+    similar_movies = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
+    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies})
 
 
 def tv_details(request, tv_id):
