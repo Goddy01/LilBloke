@@ -83,8 +83,8 @@ def get_popular_tv_shows(request):
     return render(request, 'core/popular_tv_shows.html', {'popular_tv_shows': popular_tv_shows})
 
 def get_animation_movies(request):
-    animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16")
-    return render(request, 'core/index.html', {'animation_movies': animation_movies})
+    animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16").json()
+    return render(request, 'core/animations.html', {'animation_movies': animation_movies})
 
 def get_upcoming_movies(request):
     upcoming_movies = requests.get(f"https://api.themoviedb.org/3/movie/upcoming?api_key={TMDB_API_KEY}&language=en-US&page=1")
