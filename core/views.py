@@ -100,9 +100,7 @@ def movies_catalog(request):
     genre = request.GET.get('genre')
     vote_rating = request.GET.get('vote-rating')
     if genre:
-        movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres={genre}")
-    elif vote_rating:
-        movies_catalog = requests.get(f"")
+        movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres={genre}").json()
     else:
         movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page=2").json()
     return render(request, 'catalog1.html', {'movies_catalog': movies_catalog})

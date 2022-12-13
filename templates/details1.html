@@ -381,7 +381,7 @@
 							<div class="card">
 								<div class="card__cover">
 									<img src="https://image.tmdb.org/t/p/w500/{{ similar_movie.poster_path }}" alt="">
-									<a href="#" class="card__play">
+									<a href="{% url 'movie_details' similar_movie.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>

@@ -35,7 +35,7 @@
 							<div class="card card--big">
 								<div class="card__cover">
 									<img src="https://image.tmdb.org/t/p/w500/{{ latest_movie.poster_path }}" alt="">
-									<a href="#" class="card__play">
+									<a href="{% url 'movie_details' latest_movie.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>
@@ -72,7 +72,7 @@
 							<div class="card card--big">
 								<div class="card__cover">
 									<img src="https://image.tmdb.org/t/p/w500/{{ tv_show.poster_path }}" alt="">
-									<a href="#" class="card__play">
+									<a href="{% url 'tv_details' tv_show.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>
@@ -125,12 +125,12 @@
 					<div class="card">
 						<div class="card__cover">
 							<img src="https://image.tmdb.org/t/p/w500/{{ upcoming_movie.poster_path }}" alt="">
-							<a href="#" class="card__play">
+							<a href="{% url 'movie_details' upcoming_movie.id %}" class="card__play">
 								<i class="icon ion-ios-play"></i>
 							</a>
 						</div>
 						<div class="card__content">
-							<h3 class="card__title"><a href="#">{{ upcoming_movie.title }}</a></h3>
+							<h3 class="card__title"><a href="{% url 'movie_details' upcoming_movie.id %}">{{ upcoming_movie.title }}</a></h3>
 							<span class="card__category">
 								{% if upcoming_movie.genre_ids %}
                                     {% for i in upcoming_movie.id|movie_genre_extractor %}
