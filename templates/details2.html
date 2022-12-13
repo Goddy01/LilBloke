@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load genre %}
 {% block title %}Tv Series Details{% endblock title %}
 {% block content %}
 <!-- details -->
@@ -452,130 +453,37 @@
 						</div>
 						<!-- end section title -->
 
+                        {% for similar_tv_show in similar_tv_shows.results %}
+                        {% if not forloop.counter > 6 %}
+                        {% if similar_tv_show.id != data.id %}
 						<!-- card -->
 						<div class="col-6 col-sm-4 col-lg-6">
 							<div class="card">
 								<div class="card__cover">
-									<img src="{% static 'img/covers/cover.jpg' %}" alt="">
-									<a href="#" class="card__play">
+									<img src="https://image.tmdb.org/t/p/w500/{{ similar_tv_show.poster_path }}" alt="">
+									<a href="{% url 'tv_details' similar_tv_show.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>
 								<div class="card__content">
-									<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
+									<h3 class="card__title"><a href="{% url 'tv_details' similar_tv_show.id %}">{{ similar_tv_show.name }}</a></h3>
 									<span class="card__category">
-										<a href="#">Action</a>
-										<a href="#">Triler</a>
+										{% if similar_tv_show.genre_ids %}
+                                            {% for i in similar_tv_show.id|tv_genre_extractor %}
+                                                <a>{{ i }}</a>
+                                            {% endfor %}
+                                        {% else %}
+                                            <a>Genre not available</a>
+                                        {% endif %}
 									</span>
-									<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+									<span class="card__rate"><i class="icon ion-ios-star"></i>{{ similar_tv_show.vote_average }}</span>
 								</div>
 							</div>
 						</div>
 						<!-- end card -->
-
-						<!-- card -->
-						<div class="col-6 col-sm-4 col-lg-6">
-							<div class="card">
-								<div class="card__cover">
-									<img src="{% static 'img/covers/cover2.jpg' %}" alt="">
-									<a href="#" class="card__play">
-										<i class="icon ion-ios-play"></i>
-									</a>
-								</div>
-								<div class="card__content">
-									<h3 class="card__title"><a href="#">Benched</a></h3>
-									<span class="card__category">
-										<a href="#">Comedy</a>
-									</span>
-									<span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-
-						<!-- card -->
-						<div class="col-6 col-sm-4 col-lg-6">
-							<div class="card">
-								<div class="card__cover">
-									<img src="{% static 'img/covers/cover3.jpg' %}" alt="">
-									<a href="#" class="card__play">
-										<i class="icon ion-ios-play"></i>
-									</a>
-								</div>
-								<div class="card__content">
-									<h3 class="card__title"><a href="#">Whitney</a></h3>
-									<span class="card__category">
-										<a href="#">Romance</a>
-										<a href="#">Drama</a>
-										<a href="#">Music</a>
-									</span>
-									<span class="card__rate"><i class="icon ion-ios-star"></i>6.3</span>
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-
-						<!-- card -->
-						<div class="col-6 col-sm-4 col-lg-6">
-							<div class="card">
-								<div class="card__cover">
-									<img src="{% static 'img/covers/cover4.jpg' %}" alt="">
-									<a href="#" class="card__play">
-										<i class="icon ion-ios-play"></i>
-									</a>
-								</div>
-								<div class="card__content">
-									<h3 class="card__title"><a href="#">Blindspotting</a></h3>
-									<span class="card__category">
-										<a href="#">Comedy</a>
-										<a href="#">Drama</a>
-									</span>
-									<span class="card__rate"><i class="icon ion-ios-star"></i>7.9</span>
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-
-						<!-- card -->
-						<div class="col-6 col-sm-4 col-lg-6">
-							<div class="card">
-								<div class="card__cover">
-									<img src="{% static 'img/covers/cover5.jpg' %}" alt="">
-									<a href="#" class="card__play">
-										<i class="icon ion-ios-play"></i>
-									</a>
-								</div>
-								<div class="card__content">
-									<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
-									<span class="card__category">
-										<a href="#">Action</a>
-										<a href="#">Triler</a>
-									</span>
-									<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-
-						<!-- card -->
-						<div class="col-6 col-sm-4 col-lg-6">
-							<div class="card">
-								<div class="card__cover">
-									<img src="{% static 'img/covers/cover6.jpg' %}" alt="">
-									<a href="#" class="card__play">
-										<i class="icon ion-ios-play"></i>
-									</a>
-								</div>
-								<div class="card__content">
-									<h3 class="card__title"><a href="#">Benched</a></h3>
-									<span class="card__category">
-										<a href="#">Comedy</a>
-									</span>
-									<span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
 					</div>
 				</div>
 				<!-- end sidebar -->
