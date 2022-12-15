@@ -52,7 +52,8 @@ def movie_details(request, movie_id):
     except:
         movie_key = None
     similar_movies = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
-    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies})
+    comments = Comment.objects.filter(movie_id=movie_id)
+    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies, 'comments': comments})
 
 
 def tv_details(request, tv_id):
@@ -122,9 +123,10 @@ def make_comment(request, movie_id):
         user = request.user
         movie_id = movie_id
         comment = request.POST.get('comment')
-        Comment.objects.create(user=user, movie_id=movie_id, comment=comment)
+        comment = Comment.objects.create(user=user, movie_id=movie_id, comment=comment)
         return redirect('movie_details', movie_id=movie_id)
-    return render(request, 'core/details.html')
+    comments = Comment.objects.filter(movie_id=movie_id)
+    return render(request, 'core/details.html', {'comments': comments})
 
 def grid_catalog(request):
     return render(request, 'catalog1.html')
