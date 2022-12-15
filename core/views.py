@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv, find_dotenv
 import os, requests, http, socket
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from datetime import date
 from .models import Comment
 from django.urls import resolve
@@ -121,20 +121,26 @@ def tv_shows_catalog(request):
     return render(request, 'tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog})
     
 def movie_make_comment(request, movie_id):
-    if request.method == 'POST':
-        user = request.user
-        comment = request.POST.get('comment')
-        comment = Comment.objects.create(user=user, movie_id=movie_id, comment=comment)
-        return redirect('movie_details', movie_id=movie_id)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            comment = request.POST.get('comment')
+            comment = Comment.objects.create(user=user, movie_id=movie_id, comment=comment)
+            return redirect('movie_details', movie_id=movie_id)
+    else:
+        return HttpResponse('You must be authenticated to add comments.')
     comments = Comment.objects.filter(movie_id=movie_id)
     return render(request, 'core/details.html', {'comments': comments})
 
 def tv_show_make_comment(request, tv_id):
-    if request.method == 'POST':
-        user = request.user
-        comment = request.POST.get('comment')
-        comment = Comment.objects.create(user=user, movie_id=tv_id, comment=comment)
-        return redirect('tv_details', tv_id=tv_id)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            comment = request.POST.get('comment')
+            comment = Comment.objects.create(user=user, movie_id=tv_id, comment=comment)
+            return redirect('tv_details', tv_id=tv_id)
+    else:
+        return HttpResponse('You must be authenticated to add comments.')
     comments = Comment.objects.filter(movie_id=tv_id)
     return render(request, 'core/details.html', {'comments': comments})
 
