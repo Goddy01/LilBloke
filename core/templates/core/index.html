@@ -142,25 +142,25 @@
 			<div class="row">
 				<!-- section title -->
 				<div class="col-12">
-					<h2 class="section__title">This Week's Trending Movies</h2>
+					<h2 class="section__title">This Week's Trending Tv Shows</h2>
 				</div>
 				<!-- end section title -->
 
-                {% for trending_movie in trending_movies.results %}
+                {% for trending_tv_show in trending_tv_shows.results %}
                 {% if not forloop.counter > 18%}
 				<!-- card -->
 				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 					<div class="card">
 						<div class="card__cover">
-							<img src="https://image.tmdb.org/t/p/w500/{{ trending_movie.poster_path }}" alt="">
-							<a href="{% url 'movie_details' trending_movie.id %}" class="card__play">
+							<img src="https://image.tmdb.org/t/p/w500/{{ trending_tv_show.poster_path }}" alt="">
+							<a href="{% url 'movie_details' trending_tv_show.id %}" class="card__play">
 								<i class="icon ion-ios-play"></i>
 							</a>
 						</div>
 						<div class="card__content">
-							<h3 class="card__title"><a href="{% url 'movie_details' trending_movie.id %}">{{ trending_movie.title }}</a></h3>
+							<h3 class="card__title"><a href="{% url 'tv_details' trending_tv_show.id %}">{{ trending_tv_show.name }}</a></h3>
 							<span class="card__category"></span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>{{ trending_movie.vote_average }}</span>
+							<span class="card__rate"><i class="icon ion-ios-star"></i>{{ trending_tv_show.vote_average }}</span>
 						</div>
 					</div>
 				</div>
