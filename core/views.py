@@ -4,6 +4,7 @@ import os, requests, http, socket
 from django.http import JsonResponse
 from datetime import date
 from .models import Comment
+from django.urls import resolve
 
 load_dotenv(find_dotenv())
 
@@ -69,6 +70,7 @@ def tv_details(request, tv_id):
         context['tv_movie'] = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]
     except:
         context['tv_movie'] = None
+    context['comments'] = Comment.objects.filter(movie_id=tv_id)
     context['similar_tv_shows'] = similar_tv_shows
     context['seasons'] = seasons
     context['data'] = data
@@ -121,11 +123,19 @@ def tv_shows_catalog(request):
 def make_comment(request, movie_id):
     if request.method == 'POST':
         user = request.user
-        movie_id = movie_id
         comment = request.POST.get('comment')
         comment = Comment.objects.create(user=user, movie_id=movie_id, comment=comment)
         return redirect('movie_details', movie_id=movie_id)
     comments = Comment.objects.filter(movie_id=movie_id)
+    return render(request, 'core/details.html', {'comments': comments})
+
+def tv_show_comment(request, tv_id):
+    if request.method == 'POST':
+        user = request.user
+        comment = request.POST.get('comment')
+        comment = Comment.objects.create(user=user, movie_id=tv_id, comment=comment)
+        return redirect('tv_details', tv_id=tv_id)
+    comments = Comment.objects.filter(movie_id=tv_id)
     return render(request, 'core/details.html', {'comments': comments})
 
 def grid_catalog(request):
