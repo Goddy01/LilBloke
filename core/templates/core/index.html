@@ -94,43 +94,87 @@
 	</section>
 	<!-- end home -->
 
-	<!-- expected premiere -->
+	<!-- Trending Movies -->
 	<section class="section section--bg" data-bg="img/section/section.jpg">
 		<div class="container">
 			<div class="row">
 				<!-- section title -->
 				<div class="col-12">
-					<h2 class="section__title">Upcoming Movies</h2>
+					<h2 class="section__title">This Week's Trending Movies</h2>
 				</div>
 				<!-- end section title -->
 
-                {% for upcoming_movie in upcoming_movies.results %}
+                {% for trending_movie in trending_movies.results %}
+                {% if not forloop.counter > 18%}
 				<!-- card -->
 				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 					<div class="card">
 						<div class="card__cover">
-							<img src="https://image.tmdb.org/t/p/w500/{{ upcoming_movie.poster_path }}" alt="">
-							<a href="{% url 'movie_details' upcoming_movie.id %}" class="card__play">
+							<img src="https://image.tmdb.org/t/p/w500/{{ trending_movie.poster_path }}" alt="">
+							<a href="{% url 'movie_details' trending_movie.id %}" class="card__play">
 								<i class="icon ion-ios-play"></i>
 							</a>
 						</div>
 						<div class="card__content">
-							<h3 class="card__title"><a href="{% url 'movie_details' upcoming_movie.id %}">{{ upcoming_movie.title }}</a></h3>
+							<h3 class="card__title"><a href="{% url 'movie_details' trending_movie.id %}">{{ trending_movie.title }}</a></h3>
 							<span class="card__category"></span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>{{ upcoming_movie.vote_average }}</span>
+							<span class="card__rate"><i class="icon ion-ios-star"></i>{{ trending_movie.vote_average }}</span>
 						</div>
 					</div>
 				</div>
 				<!-- end card -->
+                {% endif %}
                 {% endfor %}
 
 				<!-- section btn -->
-				<div class="col-12">
+				<!-- <div class="col-12">
 					<a href="#" class="section__btn">Show more</a>
-				</div>
+				</div> -->
 				<!-- end section btn -->
 			</div>
 		</div>
 	</section>
-	<!-- end expected premiere -->
+	<!-- end Trending Movies -->
+
+    <!-- Trending Tv Shows -->
+	<section class="section section--bg" data-bg="img/section/section.jpg">
+		<div class="container">
+			<div class="row">
+				<!-- section title -->
+				<div class="col-12">
+					<h2 class="section__title">This Week's Trending Movies</h2>
+				</div>
+				<!-- end section title -->
+
+                {% for trending_movie in trending_movies.results %}
+                {% if not forloop.counter > 18%}
+				<!-- card -->
+				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+					<div class="card">
+						<div class="card__cover">
+							<img src="https://image.tmdb.org/t/p/w500/{{ trending_movie.poster_path }}" alt="">
+							<a href="{% url 'movie_details' trending_movie.id %}" class="card__play">
+								<i class="icon ion-ios-play"></i>
+							</a>
+						</div>
+						<div class="card__content">
+							<h3 class="card__title"><a href="{% url 'movie_details' trending_movie.id %}">{{ trending_movie.title }}</a></h3>
+							<span class="card__category"></span>
+							<span class="card__rate"><i class="icon ion-ios-star"></i>{{ trending_movie.vote_average }}</span>
+						</div>
+					</div>
+				</div>
+				<!-- end card -->
+                {% endif %}
+                {% endfor %}
+
+				<!-- section btn -->
+				<!-- <div class="col-12">
+					<a href="#" class="section__btn">Show more</a>
+				</div> -->
+				<!-- end section btn -->
+			</div>
+		</div>
+	</section>
+	<!-- end Trending Tv Shows -->
 {% endblock content %}
