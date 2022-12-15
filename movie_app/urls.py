@@ -41,5 +41,6 @@ urlpatterns = [
     path('tv/upcoming/', views.get_upcoming_tv_shows, name='upcoming_tv_shows'),
     path('movies-catalog/', views.movies_catalog, name='movies_catalog'),
     path('tv-shows-catalog/', views.tv_shows_catalog, name='tv_shows_catalog'),
-    path('movie/<movie_id>/make-comment/', views.make_comment, name='make_comment')
+    path('movie/<movie_id>/make-comment/', views.movie_make_comment, name='movie_make_comment'),
+    path('tv/<tv_id>/make-comment/', views.tv_show_make_comment, name='tv_make_comment'),
 ]

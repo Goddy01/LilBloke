@@ -120,7 +120,7 @@ def tv_shows_catalog(request):
         tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/tv/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page=1").json()
     return render(request, 'tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog})
     
-def make_comment(request, movie_id):
+def movie_make_comment(request, movie_id):
     if request.method == 'POST':
         user = request.user
         comment = request.POST.get('comment')
@@ -129,7 +129,7 @@ def make_comment(request, movie_id):
     comments = Comment.objects.filter(movie_id=movie_id)
     return render(request, 'core/details.html', {'comments': comments})
 
-def tv_show_comment(request, tv_id):
+def tv_show_make_comment(request, tv_id):
     if request.method == 'POST':
         user = request.user
         comment = request.POST.get('comment')

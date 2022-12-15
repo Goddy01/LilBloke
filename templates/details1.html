@@ -163,7 +163,7 @@
                                             {% endif %}
 										</ul>
 
-										<form method="post" action="{% url 'make_comment' data.id %}" class="form">
+										<form method="post" action="{% url 'movie_make_comment' data.id %}" class="form">
                                             {% csrf_token %}
 											<textarea id="comment" name="comment" class="form__textarea" placeholder="Add comment"></textarea>
 											<button type="submit" class="form__btn">Comment</button>
