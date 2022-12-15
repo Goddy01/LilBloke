@@ -3,6 +3,7 @@ from dotenv import load_dotenv, find_dotenv
 import os, requests, http, socket
 from django.http import JsonResponse
 from datetime import date
+from .models import Comment
 
 load_dotenv(find_dotenv())
 
@@ -116,6 +117,15 @@ def tv_shows_catalog(request):
         tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/tv/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page=1").json()
     return render(request, 'tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog})
     
+def make_comment(request, movie_id):
+    if request.method == 'POST':
+        user = request.user
+        movie_id = movie_id
+        comment = request.POST.get('comment')
+        Comment.objects.create(user=user, movie_id=movie_id, comment=comment)
+        return redirect('movie_details', movie_id=movie_id)
+    return render(request, 'core/details.html')
+
 def grid_catalog(request):
     return render(request, 'catalog1.html')
 
