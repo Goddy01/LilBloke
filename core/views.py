@@ -137,11 +137,15 @@ def movies_catalog(request):
 
 def tv_shows_catalog(request):
     genre = request.GET.get('genre')
+    page = request.POST.get('page')
     if genre:
-        tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres={genre}").json()
+        if page:
+            tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page={page}&with_genres={genre}").json()
+        else:
+            tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres={genre}").json()
     else:
-        tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/tv/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page=1").json()
-    return render(request, 'tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog})
+        tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/tv/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US").json()
+    return render(request, 'tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog, 'page': page, 'total_pages': tv_shows_catalog['total_pages'], 'genre': genre})
     
 def movie_make_comment(request, movie_id):
     if request.user.is_authenticated:
