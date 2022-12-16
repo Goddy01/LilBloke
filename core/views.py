@@ -42,18 +42,16 @@ def home(request):
 
 def movies_search(request, q=None):
     query = request.GET.get('q')
-    request.session['query'] = query
-    query = request.session['query']
-    
+    page = request.POST.get('page')
+
     if query:
         movies_data = requests.get(f"https://api.themoviedb.org/3/search/{request.GET.get('type')}?api_key={TMDB_API_KEY}&language=en-US&include_adult=false&query={query}").json()
-        page = request.POST.get('page')
         if page:
-            pag = pagination(page, "https://api.themoviedb.org/3/search/{request.GET.get('type')}?api_key={TMDB_API_KEY}&language=en-US&include_adult=false&query={query}")
+            movies_data = requests.get(f"https://api.themoviedb.org/3/search/{request.GET.get('type')}?api_key={TMDB_API_KEY}&language=en-US&page={page}&include_adult=false&query={query}").json()
     else:
         return redirect('404')
 
-    return render(request, 'search_result.html', {'data': movies_data, 'pag': pag, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type')})
+    return render(request, 'search_result.html', {'data': movies_data, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type'), 'page': request.POST.get('page')})
 
 def movie_details(request, movie_id):
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")

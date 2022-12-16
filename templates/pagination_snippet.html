@@ -2,7 +2,14 @@
 <div class="col-12">
     <ul class="paginator">
         <form method="post" action="">
-            <input type="text" name="page" size="1" style="background-color: #FF5695;color: white;font-weight: bold;width: 2rem;">
+            {% csrf_token %}
+            <input type="text" name="page" size="1" style="background-color: #FF5695;color: white;font-weight: bold;width: 2rem;" 
+            {% if page %}
+            value="{{ page }}"
+            {% else %}
+            value = "1"
+            {% endif %}
+            id="page">
         </form>
         <li class="paginator__item paginator__item--prev">
             <a href="">
