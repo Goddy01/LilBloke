@@ -12,6 +12,10 @@ load_dotenv(find_dotenv())
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
+def pag(page, api_call):
+    data = f"{api_call}&page={page}"
+    return data.json()
+
 def home(request):
     # latest_movie = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US").json()
     latest_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&include_video=false&primary_release_date.lte={date.today()}").json()
