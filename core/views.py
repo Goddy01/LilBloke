@@ -5,11 +5,23 @@ from django.http import JsonResponse, HttpResponse
 from datetime import date
 from .models import Comment
 from django.urls import resolve
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 load_dotenv(find_dotenv())
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
+def pagination(request, items_list, num_of_pages):
+    page_number = request.GET.get('page', 1)
+    results_paginator = Paginatior(items_list, num_of_pages)
+    try:
+        results = results_paginator.page(page_number)
+    except PageNotAnInteger:
+        results = results_paginator.page(1)
+    except EmptyPage:
+        results = results_paginator.page(results_paginator.num_of_pages)
+    return results
+
 def home(request):
     # latest_movie = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US").json()
     latest_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&include_video=false&primary_release_date.lte={date.today()}").json()
