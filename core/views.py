@@ -12,7 +12,7 @@ load_dotenv(find_dotenv())
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
-def pag(page, api_call):
+def pagination(page, api_call):
     data = f"{api_call}&page={page}"
     return data.json()
 
@@ -47,10 +47,13 @@ def movies_search(request, q=None):
     
     if query:
         movies_data = requests.get(f"https://api.themoviedb.org/3/search/{request.GET.get('type')}?api_key={TMDB_API_KEY}&language=en-US&include_adult=false&query={query}").json()
+        page = request.POST.get('page')
+        if page:
+            pag = pagination(page, "https://api.themoviedb.org/3/search/{request.GET.get('type')}?api_key={TMDB_API_KEY}&language=en-US&include_adult=false&query={query}")
     else:
         return redirect('404')
 
-    return render(request, 'search_result.html', {'data': movies_data, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type')})
+    return render(request, 'search_result.html', {'data': movies_data, 'pag': pag, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type')})
 
 def movie_details(request, movie_id):
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")

@@ -19,7 +19,11 @@
     <h2 id="search__result">Search results for: '{{ request.session.query }}'</h2>
     <div class="container">
         <div class="row">
+            {% if not pag %}
             {% for datum in data.results %}
+            {% else %}
+            {% for datum in pag.results %}
+            {% endif %}
             <!-- card -->
             <div class="col-6 col-sm-12 col-lg-6">
                 <div class="card card--list">
