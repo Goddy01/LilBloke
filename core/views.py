@@ -110,9 +110,9 @@ def get_popular_tv_shows(request):
 def get_animation_movies(request):
     page = request.POST.get('page')
     if page:
-        animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&page={page}&sort_by=popularity.desc&page=1&with_genres=16").json()
+        animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&&page={page}&with_genres=16").json()
     else:
-        animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16").json()
+        animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres=16").json()
     return render(request, 'core/animations.html', {'animation_movies': animation_movies, 'page': page, 'total_pages': animation_movies['total_pages']})
 
 def get_upcoming_movies(request):
@@ -125,11 +125,15 @@ def get_upcoming_tv_shows(request):
 
 def movies_catalog(request):
     genre = request.GET.get('genre')
-    if genre:
-        movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres={genre}").json()
+    page = request.POST.get('page')
+    if page:
+        if genre:
+            movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page={page}&with_genres={genre}").json()
+        else:
+            movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page={page}").json()
     else:
-        movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page=1").json()
-    return render(request, 'catalog1.html', {'movies_catalog': movies_catalog})
+        movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US").json()
+    return render(request, 'catalog1.html', {'movies_catalog': movies_catalog, 'page': page, 'total_pages': movies_catalog['total_pages']})
 
 def tv_shows_catalog(request):
     genre = request.GET.get('genre')
