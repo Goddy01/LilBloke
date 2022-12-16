@@ -126,14 +126,14 @@ def get_upcoming_tv_shows(request):
 def movies_catalog(request):
     genre = request.GET.get('genre')
     page = request.POST.get('page')
-    if page:
-        if genre:
+    if genre:
+        if page:
             movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page={page}&with_genres={genre}").json()
         else:
-            movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page={page}").json()
+            movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres={genre}").json()
     else:
         movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US").json()
-    return render(request, 'catalog1.html', {'movies_catalog': movies_catalog, 'page': page, 'total_pages': movies_catalog['total_pages']})
+    return render(request, 'catalog1.html', {'movies_catalog': movies_catalog, 'page': page, 'total_pages': movies_catalog['total_pages'], 'genre': genre})
 
 def tv_shows_catalog(request):
     genre = request.GET.get('genre')
