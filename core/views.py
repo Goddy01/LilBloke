@@ -1,3 +1,4 @@
+from django.utils.safestring import SafeString
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv, find_dotenv
 import os, requests, http, socket
@@ -11,17 +12,6 @@ load_dotenv(find_dotenv())
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 # Create your views here.
-def pagination(request, items_list, num_of_pages):
-    page_number = request.GET.get('page', 1)
-    results_paginator = Paginatior(items_list, num_of_pages)
-    try:
-        results = results_paginator.page(page_number)
-    except PageNotAnInteger:
-        results = results_paginator.page(1)
-    except EmptyPage:
-        results = results_paginator.page(results_paginator.num_of_pages)
-    return results
-
 def home(request):
     # latest_movie = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US").json()
     latest_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&include_video=false&primary_release_date.lte={date.today()}").json()
@@ -50,13 +40,13 @@ def movies_search(request, q=None):
     query = request.GET.get('q')
     request.session['query'] = query
     query = request.session['query']
+    
     if query:
-        movies_data = requests.get(f"https://api.themoviedb.org/3/search/{request.GET.get('type')}?api_key={TMDB_API_KEY}&language=en-US&page=1&include_adult=false&query={query}").json()
+        movies_data = requests.get(f"https://api.themoviedb.org/3/search/{request.GET.get('type')}?api_key={TMDB_API_KEY}&language=en-US&include_adult=false&query={query}").json()
     else:
         return redirect('404')
-    # genres = requests.get(f"https://api.themoviedb.org/3/genre/tv/list?api_key={TMDB_API_KEY}")
 
-    return render(request, 'search_result.html', {'data': movies_data, 'query': query, 'type': request.GET.get('type')})
+    return render(request, 'search_result.html', {'data': movies_data, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type')})
 
 def movie_details(request, movie_id):
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
