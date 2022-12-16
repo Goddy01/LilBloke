@@ -100,8 +100,12 @@ def get_popular_movies(request):
     return render(request, 'core/popular_movies.html', {'popular_movies': popular_movies, 'page': page, 'total_pages': popular_movies['total_pages']})
 
 def get_popular_tv_shows(request):
-    popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
-    return render(request, 'core/popular_tv_shows.html', {'popular_tv_shows': popular_tv_shows})
+    page = request.POST.get('page')
+    if page:
+        popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US&page={page}").json()
+    else:
+        popular_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/popular?api_key={TMDB_API_KEY}&language=en-US").json()
+    return render(request, 'core/popular_tv_shows.html', {'popular_tv_shows': popular_tv_shows, 'page': page, 'total_pages': popular_tv_shows['total_pages']})
 
 def get_animation_movies(request):
     animation_movies = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=16").json()
