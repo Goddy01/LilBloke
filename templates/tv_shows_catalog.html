@@ -41,22 +41,22 @@
 									<span></span>
 								</div>
 								<select name="genre" id="" style="background-color: #FF5688;border: none;padding: 0.5rem;color: white;">
-                                    <option value="10759">Action & Adventure</option>
-                                    <option value="16">Animation</option>
-                                    <option value="35">Comedy</option>
-                                    <option value="80">Crime</option>
-                                    <option value="99">Documentary</option>
-                                    <option value="18">Drama</option>
-                                    <option value="10751">Family</option>
-                                    <option value="10762">Kids</option>
-                                    <option value="9648">Mystery</option>
-                                    <option value="10763">News</option>
-                                    <option value="10764">Reality</option>
-                                    <option value="10765">Sci-Fi & Fantasy</option>
-                                    <option value="10766">Soap</option>
-                                    <option value="10767">Talk</option>
-                                    <option value="10770">War & Politics</option>
-                                    <option value="37">Western</option>
+                                    <option value="10759" {% if genre == '10759' %}selected{% endif %}>Action & Adventure</option>
+                                    <option value="16" {% if genre == '16' %}selected{% endif %}>Animation</option>
+                                    <option value="35" {% if genre == '35' %}selected{% endif %}>Comedy</option>
+                                    <option value="80" {% if genre == '80' %}selected{% endif %}>Crime</option>
+                                    <option value="99" {% if genre == '99' %}selected{% endif %}>Documentary</option>
+                                    <option value="18" {% if genre == '18' %}selected{% endif %}>Drama</option>
+                                    <option value="10751" {% if genre == '10751' %}selected{% endif %}>Family</option>
+                                    <option value="10762" {% if genre == '10762' %}selected{% endif %}>Kids</option>
+                                    <option value="9648" {% if genre == '9648' %}selected{% endif %}>Mystery</option>
+                                    <option value="10763" {% if genre == '10763' %}selected{% endif %}>News</option>
+                                    <option value="10764" {% if genre == '10764' %}selected{% endif %}>Reality</option>
+                                    <option value="10765" {% if genre == '10765' %}selected{% endif %}>Sci-Fi & Fantasy</option>
+                                    <option value="10766" {% if genre == '10766' %}selected{% endif %}>Soap</option>
+                                    <option value="10767" {% if genre == '10767' %}selected{% endif %}>Talk</option>
+                                    <option value="10770" {% if genre == '10770' %}selected{% endif %}>War & Politics</option>
+                                    <option value="37" {% if genre == '37' %}selected{% endif %}>Western</option>
                                 </select>
 
 							</div>
