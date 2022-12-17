@@ -176,7 +176,7 @@ def add_to_watchlist(request, movie_id):
     if user.is_authenticated:
         instance = Watchlist.objects.create(user=user, movie_id=movie_id)
         bool = True
-        messages.success(request, 'The movie has been added to your watchlist')
+        # messages.success(request, 'The movie has been added to your watchlist')
     return JsonResponse(bool, safe=False)
 
 def grid_catalog(request):

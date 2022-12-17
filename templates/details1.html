@@ -14,6 +14,7 @@
 				<!-- title -->
 				<div class="col-12">
 					<h1 class="details__title">{{ data.original_title }}</h1>
+                    {% include 'messages.html' %}
 				</div>
 				<!-- end title -->
 
@@ -73,10 +74,8 @@
 				<!-- end player -->
 			</div>
             <div>
-                <button type="submit" class="form__btn">
-                    <a href="{% url 'add_to_watchlist' data.id %}" style="color: white;">
-                        Add to Watchlist
-                    </a>
+                <button type="submit" class="form__btn" data-product="{{ data.id }}" id="add_to_watchlist">
+                    Add to Watchlist
                 </button>
             </div>
 		</div>
@@ -224,4 +223,20 @@
 		</div>
 	</section>
 	<!-- end content -->
+    <script>
+        $(document).on('click', '#add_to_watchlist', function () {
+            let _movieId = $(this).attr('data-product');
+            // Ajax
+            $.ajax ({
+                url: "{% url 'add_to_watchlist' data.id %}",
+                data: {
+                    product: _movieId
+                },
+                dataType: 'json',
+                success: function(res) {
+                    console.log('Added')
+                }
+            })
+        })
+    </script>
 {% endblock content %}
