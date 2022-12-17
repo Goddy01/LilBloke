@@ -171,6 +171,8 @@ def tv_show_make_comment(request, tv_id):
     comments = Comment.objects.filter(movie_id=tv_id)
     return render(request, 'core/details.html', {'comments': comments})
 
+# def add_to_watchlist(request, movie_id)
+
 def grid_catalog(request):
     return render(request, 'catalog1.html')
 
