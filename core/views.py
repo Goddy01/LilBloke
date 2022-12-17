@@ -4,7 +4,7 @@ from dotenv import load_dotenv, find_dotenv
 import os, requests, http, socket
 from django.http import JsonResponse, HttpResponse
 from datetime import date
-from .models import Comment
+from .models import Comment, Watchlist
 from django.urls import resolve
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -171,7 +171,12 @@ def tv_show_make_comment(request, tv_id):
     comments = Comment.objects.filter(movie_id=tv_id)
     return render(request, 'core/details.html', {'comments': comments})
 
-# def add_to_watchlist(request, movie_id)
+def add_to_watchlist(request, movie_id):
+    user = request.user
+    if user.is_authenticated:
+        instance = Watchlist.objects.create(user=user, movie_id=movie_id)
+        bool = True
+    return JsonResponse(bool, safe=True)
 
 def grid_catalog(request):
     return render(request, 'catalog1.html')
