@@ -1,4 +1,4 @@
-from django.utils.safestring import SafeString
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv, find_dotenv
 import os, requests, http, socket
@@ -176,7 +176,8 @@ def add_to_watchlist(request, movie_id):
     if user.is_authenticated:
         instance = Watchlist.objects.create(user=user, movie_id=movie_id)
         bool = True
-    return JsonResponse(bool, safe=True)
+        messages.success(request, 'The movie has been added to your watchlist')
+    return JsonResponse(bool, safe=False)
 
 def grid_catalog(request):
     return render(request, 'catalog1.html')
