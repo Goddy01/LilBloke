@@ -71,6 +71,10 @@ def movie_details(request, movie_id):
 def tv_details(request, tv_id):
     context = {}
     seasons = {}
+    try:
+        watchlist_instance = Watchlist.objects.get(movie_id=tv_id, user=request.user)
+    except:
+        watchlist_instance = None
     data = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}?api_key={TMDB_API_KEY}&language=en-US").json()
     similar_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     for season in data['seasons']:
@@ -85,6 +89,7 @@ def tv_details(request, tv_id):
     context['similar_tv_shows'] = similar_tv_shows
     context['seasons'] = seasons
     context['data'] = data
+    context['watchlist_instance'] = watchlist_instance
     return render(request, 'details2.html', context)
 
 # def get_latest_movies(request):
