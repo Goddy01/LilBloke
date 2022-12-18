@@ -30,9 +30,6 @@
 		<div class="container">
 			<div class="row">
                 <div class="col-12">
-                    <h1 class="home__title"><b>Watchlist</b></h1>
-                </div>
-                <div class="col-12">
                     <div class="header__search-content">
                         <form method="get">
                             <select name="watch_type" id="" style="background-color: #FF5688;border: none;padding: 1rem;color: white;">
@@ -43,10 +40,10 @@
                         </form>
                     </div>
                 </div>
-                {% if request.GET.watch_type %}
+                {% if watchlist_movies %}
                 {% for movie in watchlist_movies.values %}
 				<!-- card -->
-				<div class="col-6 col-sm-12 col-lg-6">
+				<div class="col-6 col-sm-12 col-lg-6" style="margin-top: 3rem;">
 					<div class="card card--list">
 						<div class="row">
 							<div class="col-12 col-sm-4">
@@ -98,6 +95,7 @@
 				<!-- end card -->
                 {% endfor %}
                 {% endif %}
+                
 
 				<!-- paginator -->
 				{% include 'pagination_snippet.html' %}

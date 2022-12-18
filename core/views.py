@@ -185,12 +185,14 @@ def add_to_watchlist_movie(request, movie_id):
     user = request.user
     if user.is_authenticated:
         if not Watchlist.objects.filter(user=user, movie_id=movie_id).exists():
-            instance = Watchlist.objects.create(user=user, movie_id=movie_id)
+            instance = Watchlist.objects.create(user=user, movie_id=movie_id, movie_type='movie')
             context['instance'] = instance
             # bool = True
+        else:
+            return HttpResponse('This tv show is already in your Watchlist')
     else:
         return HttpResponse('You must be authenticated before you can add movies to your watchlist')
-    return render(request, 'core/details1.html', context)
+    return render(request, 'details1.html', context)
     # return JsonResponse(bool, safe=False)
 
 def add_to_watchlist_tv(request, tv_id):
@@ -198,12 +200,14 @@ def add_to_watchlist_tv(request, tv_id):
     user = request.user
     if user.is_authenticated:
         if not Watchlist.objects.filter(user=user, movie_id=tv_id).exists():
-            instance = Watchlist.objects.create(user=user, movie_id=tv_id)
+            instance = Watchlist.objects.create(user=user, movie_id=tv_id, movie_type='tv')
             context['instance'] = instance
-            # bool = True
+            return redirect('watchlist')
+        else:
+            return HttpResponse('This tv show is already in your Watchlist')
     else:
         return HttpResponse('You must be authenticated before you can add movies to your watchlist')
-    return render(request, 'core/details2.html', context)
+    return render(request, 'details2.html', context)
 
 def remove_from_watchlist(request, movie_id):
     user = request.user
@@ -215,9 +219,10 @@ def watchlist(request):
     watchlist_movies = {}
     watchlist = Watchlist.objects.filter(user=request.user)
     for movie in watchlist:
-        movie_call = requests.get(f"https://api.themoviedb.org/3/{watch_type}/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
-        watchlist_movies[f'{movie.movie_id}'] = movie_call
-    print('WISHLIST: ', watchlist_movies)
+        if movie.movie_type == watch_type:
+            movie_call = requests.get(f"https://api.themoviedb.org/3/{watch_type}/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
+            watchlist_movies[f'{movie.movie_id}'] = movie_call
+            print('WISHLIST: ', watchlist_movies)
     return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies, 'watch_type': watch_type})
 
 def movie_gen(movie_id):
