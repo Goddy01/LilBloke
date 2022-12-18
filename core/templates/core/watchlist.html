@@ -34,13 +34,16 @@
                 </div>
                 <div class="col-12">
                     <div class="header__search-content">
-                        <select name="watch_type" id="" style="background-color: #FF5688;border: none;padding: 1rem;color: white;">
-                            <option value="tv">TV Shows</option>
-                            <option value="movies">Movies</option>
-                        </select>
-                        <button type="submit">submit</button>
+                        <form method="get">
+                            <select name="watch_type" id="" style="background-color: #FF5688;border: none;padding: 1rem;color: white;">
+                                <option value="tv">TV Shows</option>
+                                <option value="movie">Movies</option>
+                            </select>
+                            <button type="submit">submit</button>
+                        </form>
                     </div>
                 </div>
+                {% if request.GET.watch_type %}
                 {% for movie in watchlist_movies.values %}
 				<!-- card -->
 				<div class="col-6 col-sm-12 col-lg-6">
@@ -49,11 +52,11 @@
 							<div class="col-12 col-sm-4">
 								<div class="card__cover">
 									<img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="">
-                                    {% if request.GET.watch_type == 'movies' %}
+                                    {% if request.GET.watch_type == 'movie' %}
 									<a href="{% url 'movie_details' movie.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
-                                    {% else %}
+                                    {% elif request.GET.watch_type == 'tv' %}
                                     <a href="{% url 'tv_details' movie.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
@@ -64,11 +67,11 @@
 							<div class="col-12 col-sm-8">
 								<div class="card__content">
 									<h3 class="card__title">
-                                        {% if request.GET.watch_typ == .movies %}
+                                        {% if request.GET.watch_type == 'movie' %}
                                         <a href="{% url 'movie_details' movie.id %}">
                                             {{ movie.title }}
                                         </a>
-                                        {% else %}
+                                        {% elif request.GET.watch_type == 'tv' %}
                                         <a href="{% url 'tv_details' movie.id %}">
                                             {{ movie.original_name }}
                                         </a>
@@ -94,6 +97,7 @@
 				</div>
 				<!-- end card -->
                 {% endfor %}
+                {% endif %}
 
 				<!-- paginator -->
 				{% include 'pagination_snippet.html' %}
