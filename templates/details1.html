@@ -75,15 +75,17 @@
 			</div>
             <div>
                 {% if watchlist_instance %}
-                <a href="{% url 'remove_from_wishlist' data.id %}">
+                <a href="{% url 'remove_from_watchlist' data.id %}">
                     <button type="button" class="form__btn">
                         Remove from Watchlist
                     </button>
                 </a>
                 {% else %}
-                <button type="button" class="form__btn" data-product="{{ data.id }}" id="add_to_watchlist">
-                    Add to Watchlist
-                </button>
+                <a href="{% url 'add_to_watchlist' data.id %}">
+                    <button type="button" class="form__btn">
+                        Add to Watchlist
+                    </button>
+                </a>
                 {% endif %}
             </div>
 		</div>
@@ -232,19 +234,19 @@
 	</section>
 	<!-- end content -->
     <script>
-        $(document).on('click', '#add_to_watchlist', function () {
-            let _movieId = $(this).attr('data-product');
-            // Ajax
-            $.ajax ({
-                url: "{% url 'add_to_watchlist' data.id %}",
-                data: {
-                    product: _movieId
-                },
-                dataType: 'json',
-                success: function(res) {
-                    console.log('Added')
-                }
-            })
-        })
-    </script>
+    //     $(document).on('click', '#add_to_watchlist', function () {
+    //         let _movieId = $(this).attr('data-product');
+    //         // Ajax
+    //         $.ajax ({
+    //             url: "{% url 'add_to_watchlist' data.id %}",
+    //             data: {
+    //                 product: _movieId
+    //             },
+    //             dataType: 'json',
+    //             success: function(res) {
+    //                 console.log('Added')
+    //             }
+    //         })
+    //     })
+    // </script>
 {% endblock content %}
