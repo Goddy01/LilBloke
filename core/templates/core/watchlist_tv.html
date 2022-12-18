@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Watchlist{% endblock title %}
+{% block title %}Watchlist Tv Show{% endblock title %}
 {% block content %}
 	<!-- page title -->
 	<section class="section section--first section--bg" data-bg="{% static 'img/section/section.jpg' %}">
@@ -29,6 +29,9 @@
 	<div class="catalog" style="margin-top: 5rem;">
 		<div class="container">
 			<div class="row">
+                <div class="col-12">
+                    <h1 class="home__title"><b>Watchlist (Movies)</b></h1>
+                </div>
                 {% for movie in watchlist_movies.values %}
 				<!-- card -->
 				<div class="col-6 col-sm-12 col-lg-6">

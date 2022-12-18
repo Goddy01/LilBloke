@@ -197,8 +197,8 @@ def add_to_watchlist_tv(request, tv_id):
     context = {}
     user = request.user
     if user.is_authenticated:
-        if not Watchlist.objects.filter(user=user, movie_id=movie_id).exists():
-            instance = Watchlist.objects.create(user=user, movie_id=movie_id)
+        if not Watchlist.objects.filter(user=user, movie_id=tv_id).exists():
+            instance = Watchlist.objects.create(user=user, movie_id=tv_id)
             context['instance'] = instance
             # bool = True
     else:
@@ -217,7 +217,7 @@ def watchlist(request):
         movie_call = requests.get(f"https://api.themoviedb.org/3/movie/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
         watchlist_movies[f'{movie.movie_id}'] = movie_call
     print('WISHLIST: ', watchlist_movies)
-    return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies})
+    return render(request, 'core/watchlist_movies.html', {'watchlist_movies': watchlist_movies})
 
 def movie_gen(movie_id):
     data = requests.get(f"")
