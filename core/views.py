@@ -197,8 +197,8 @@ def watchlist(request):
     watchlist_movies = {}
     watchlist = Watchlist.objects.filter(user=request.user)
     for movie in watchlist:
-        movie_call = requests.get(f"https://api.themoviedb.org/3/movie/{movie.id}?api_key={TMDB_API_KEY}&language=en-US").json()
-        watchlist_movies[f'{movie.id}'] = movie_call
+        movie_call = requests.get(f"https://api.themoviedb.org/3/movie/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
+        watchlist_movies[f'{movie.movie_id}'] = movie_call
     print('WISHLIST: ', watchlist_movies)
     return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies})
 

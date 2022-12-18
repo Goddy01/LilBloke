@@ -29,15 +29,15 @@
 	<div class="catalog" style="margin-top: 5rem;">
 		<div class="container">
 			<div class="row">
-                {% for watchlist_movie in watchlist_movies.results %}
+                {% for movie in watchlist_movies.values %}
 				<!-- card -->
 				<div class="col-6 col-sm-12 col-lg-6">
 					<div class="card card--list">
 						<div class="row">
 							<div class="col-12 col-sm-4">
 								<div class="card__cover">
-									<img src="https://image.tmdb.org/t/p/w500/{{ watchlist_movie.poster_path }}" alt="">
-									<a href="{% url 'movie_details' watchlist_movie.id %}" class="card__play">
+									<img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="">
+									<a href="{% url 'movie_details' movie.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>
@@ -45,16 +45,16 @@
 
 							<div class="col-12 col-sm-8">
 								<div class="card__content">
-									<h3 class="card__title"><a href="{% url 'movie_details' watchlist_movie.id %}">{{ watchlist_movie.title }}</a></h3>
+									<h3 class="card__title"><a href="{% url 'movie_details' movie.id %}">{{ movie.title }}</a></h3>
 									<span class="card__category"></span>
 
 									<div class="card__wrap">
-										<span class="card__rate"><i class="icon ion-ios-star"></i>{{ watchlist_movie.vote_average }}</span>
+										<span class="card__rate"><i class="icon ion-ios-star"></i>{{ movie.vote_average }}</span>
 									</div>
 
 									<div class="card__description">
-                                        {% if watchlist_movie.overview %}
-										<p>{{ watchlist_movie.overview }}</p>
+                                        {% if movie.overview %}
+										<p>{{ movie.overview }}</p>
                                         {% else %}
                                         <p>Overview Not Available</p>
                                         {% endif %}
