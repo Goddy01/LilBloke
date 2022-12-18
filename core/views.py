@@ -199,6 +199,7 @@ def watchlist(request):
     for movie in watchlist:
         movie_call = requests.get(f"https://api.themoviedb.org/3/movie/{movie.id}?api_key={TMDB_API_KEY}&language=en-US").json()
         watchlist_movies[f'{movie.id}'] = movie_call
+    print('WISHLIST: ', watchlist_movies)
     return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies})
 
 def movie_gen(movie_id):
