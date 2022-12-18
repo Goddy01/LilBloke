@@ -211,13 +211,18 @@ def remove_from_watchlist(request, movie_id):
     return redirect('watchlist')
 
 def watchlist(request):
+    watch_type = request.GET.get('watch_type')
     watchlist_movies = {}
     watchlist = Watchlist.objects.filter(user=request.user)
     for movie in watchlist:
-        movie_call = requests.get(f"https://api.themoviedb.org/3/movie/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
-        watchlist_movies[f'{movie.movie_id}'] = movie_call
+        if type == 'movies':
+            movie_call = requests.get(f"https://api.themoviedb.org/3/movie/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
+            watchlist_movies[f'{movie.movie_id}'] = movie_call
+        else:
+            movie_call = requests.get(f"https://api.themoviedb.org/3/tv/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
+            watchlist_movies[f'{movie.movie_id}'] = movie_call
     print('WISHLIST: ', watchlist_movies)
-    return render(request, 'core/watchlist_movies.html', {'watchlist_movies': watchlist_movies})
+    return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies, 'watch_type': watch_type})
 
 def movie_gen(movie_id):
     data = requests.get(f"")

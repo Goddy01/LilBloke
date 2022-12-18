@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Watchlist Tv Show{% endblock title %}
+{% block title %}Watchlist{% endblock title %}
 {% block content %}
 	<!-- page title -->
 	<section class="section section--first section--bg" data-bg="{% static 'img/section/section.jpg' %}">
@@ -30,7 +30,16 @@
 		<div class="container">
 			<div class="row">
                 <div class="col-12">
-                    <h1 class="home__title"><b>Watchlist (Movies)</b></h1>
+                    <h1 class="home__title"><b>Watchlist</b></h1>
+                </div>
+                <div class="col-12">
+                    <div class="header__search-content">
+                        <select name="type" id="" style="background-color: #FF5688;border: none;padding: 1rem;color: white;">
+                            <option value="tv">TV Shows</option>
+                            <option value="movie">Movies</option>
+                        </select>
+                        <button type="submit">submit</button>
+                    </div>
                 </div>
                 {% for movie in watchlist_movies.values %}
 				<!-- card -->
