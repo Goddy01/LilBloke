@@ -188,8 +188,9 @@ def add_to_watchlist_movie(request, movie_id):
             instance = Watchlist.objects.create(user=user, movie_id=movie_id, movie_type='movie')
             context['instance'] = instance
             # bool = True
+            return redirect('watchlist')
         else:
-            return HttpResponse('This tv show is already in your Watchlist')
+            return HttpResponse('This movie is already in your Watchlist')
     else:
         return HttpResponse('You must be authenticated before you can add movies to your watchlist')
     return render(request, 'details1.html', context)
@@ -204,7 +205,7 @@ def add_to_watchlist_tv(request, tv_id):
             context['instance'] = instance
             return redirect('watchlist')
         else:
-            return HttpResponse('This tv show is already in your Watchlist')
+            return HttpResponse('This Tv Show is already in your Watchlist')
     else:
         return HttpResponse('You must be authenticated before you can add movies to your watchlist')
     return render(request, 'details2.html', context)
