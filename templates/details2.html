@@ -80,6 +80,22 @@
 				</div>
 				<!-- end player -->
 
+                <div>
+                    {% if watchlist_instance %}
+                    <a href="{% url 'remove_from_watchlist' data.id %}">
+                        <button type="button" class="form__btn" style="width: 13rem;">
+                            Remove from Watchlist
+                        </button>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'add_to_watchlist' data.id %}">
+                        <button type="button" class="form__btn">
+                            Add to Watchlist
+                        </button>
+                    </a>
+                    {% endif %}
+                </div>
+
 				<!-- accordion -->
 				<div class="col-12 col-xl-6">
 					<div class="accordion" id="accordion">
