@@ -44,4 +44,5 @@ urlpatterns = [
     path('movie/<movie_id>/make-comment/', views.movie_make_comment, name='movie_make_comment'),
     path('tv/<tv_id>/make-comment/', views.tv_show_make_comment, name='tv_make_comment'),
     path('add_to_watchlist/<movie_id>/', views.add_to_watchlist, name='add_to_watchlist'),
+    path('remove_from_watchlist/<movie_id>/', views.remove_from_watchlist, name='remove_from_watchlist'),
 ]

@@ -54,6 +54,7 @@ def movies_search(request, q=None):
     return render(request, 'search_result.html', {'data': movies_data, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type'), 'page': request.POST.get('page')})
 
 def movie_details(request, movie_id):
+    watchlist_instance = Watchlist.objects.get(movie_id=movie_id, user=request.user)
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
     try:
         movie_key = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]['key']
@@ -61,7 +62,7 @@ def movie_details(request, movie_id):
         movie_key = None
     similar_movies = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     comments = Comment.objects.filter(movie_id=movie_id)
-    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies, 'comments': comments})
+    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies, 'comments': comments, 'watchlist_instance': watchlist_instance})
 
 
 def tv_details(request, tv_id):
@@ -172,15 +173,17 @@ def tv_show_make_comment(request, tv_id):
     return render(request, 'core/details.html', {'comments': comments})
 
 def add_to_watchlist(request, movie_id):
+    context = {}
     user = request.user
     if user.is_authenticated:
         if not Watchlist.objects.create(user=user, movie_id=movie_id).exists():
-            Watchlist.objects.create(user=user, movie_id=movie_id)
-            bool = True
+            instance = Watchlist.objects.create(user=user, movie_id=movie_id)
+            context['instance'] = instance
+            # bool = True
     else:
         return HttpResponse('You must be authenticated before you can add movies to your watchlist')
-
-    return JsonResponse(bool, safe=False)
+    return render(request, 'core/details1.html', context)
+    # return JsonResponse(bool, safe=False)
 
 def remove_from_watchlist(request, movie_id):
     user = request.user

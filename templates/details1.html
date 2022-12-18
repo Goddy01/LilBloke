@@ -74,9 +74,17 @@
 				<!-- end player -->
 			</div>
             <div>
+                {% if watchlist_instance %}
+                <a href="{% url 'remove_from_wishlist' data.id %}">
+                    <button type="button" class="form__btn">
+                        Remove from Watchlist
+                    </button>
+                </a>
+                {% else %}
                 <button type="button" class="form__btn" data-product="{{ data.id }}" id="add_to_watchlist">
                     Add to Watchlist
                 </button>
+                {% endif %}
             </div>
 		</div>
 		<!-- end details content -->
