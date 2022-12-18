@@ -54,7 +54,10 @@ def movies_search(request, q=None):
     return render(request, 'search_result.html', {'data': movies_data, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type'), 'page': request.POST.get('page')})
 
 def movie_details(request, movie_id):
-    watchlist_instance = Watchlist.objects.get(movie_id=movie_id, user=request.user)
+    try:
+        watchlist_instance = Watchlist.objects.get(movie_id=movie_id, user=request.user)
+    except:
+        watchlist_instance = None
     data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
     try:
         movie_key = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]['key']
