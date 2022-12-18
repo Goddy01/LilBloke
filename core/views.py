@@ -194,7 +194,11 @@ def remove_from_watchlist(request, movie_id):
     return redirect('watchlist')
 
 def watchlist(request):
-    watchlist_movies = Watchlist.objects.filter(user=request.user)
+    watchlist_movies = {}
+    watchlist = Watchlist.objects.filter(user=request.user)
+    for movie in watchlist:
+        movie_call = requests.get(f"https://api.themoviedb.org/3/movie/{movie.id}?api_key={TMDB_API_KEY}&language=en-US").json()
+        watchlist_movies[f'{movie.id}'] = movie_call
     return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies})
 
 def movie_gen(movie_id):
