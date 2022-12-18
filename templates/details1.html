@@ -14,12 +14,12 @@
 				<!-- title -->
 				<div class="col-12">
 					<h1 class="details__title">{{ data.original_title }}</h1>
-                    {% include 'messages.html' %}
 				</div>
 				<!-- end title -->
 
 				<!-- content -->
 				<div class="col-12 col-xl-6">
+                    {% include 'messages.html' %}
 					<div class="card card--details">
 						<div class="row">
 							<!-- card cover -->
@@ -74,7 +74,7 @@
 				<!-- end player -->
 			</div>
             <div>
-                <button type="submit" class="form__btn" data-product="{{ data.id }}" id="add_to_watchlist">
+                <button type="button" class="form__btn" data-product="{{ data.id }}" id="add_to_watchlist">
                     Add to Watchlist
                 </button>
             </div>

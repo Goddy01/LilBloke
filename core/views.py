@@ -174,11 +174,25 @@ def tv_show_make_comment(request, tv_id):
 def add_to_watchlist(request, movie_id):
     user = request.user
     if user.is_authenticated:
-        instance = Watchlist.objects.create(user=user, movie_id=movie_id)
-        bool = True
-        # messages.success(request, 'The movie has been added to your watchlist')
+        if not Watchlist.objects.create(user=user, movie_id=movie_id).exists():
+            Watchlist.objects.create(user=user, movie_id=movie_id)
+            bool = True
+    else:
+        return HttpResponse('You must be authenticated before you can add movies to your watchlist')
+
     return JsonResponse(bool, safe=False)
 
+def remove_from_watchlist(request, movie_id):
+    user = request.user
+    Watchlist.objects.get(user=user, movie_id=movie_id).delete()
+    return redirect('watchlist')
+
+def watchlist(request):
+    watchlist_movies = Watchlist.objects.filter(user=request.user)
+    return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies})
+
+def movie_gen(movie_id):
+    data = requests.get(f"")
 def grid_catalog(request):
     return render(request, 'catalog1.html')
 
