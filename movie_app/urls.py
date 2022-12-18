@@ -43,7 +43,8 @@ urlpatterns = [
     path('tv-shows-catalog/', views.tv_shows_catalog, name='tv_shows_catalog'),
     path('movie/<movie_id>/make-comment/', views.movie_make_comment, name='movie_make_comment'),
     path('tv/<tv_id>/make-comment/', views.tv_show_make_comment, name='tv_make_comment'),
-    path('add_to_watchlist/<movie_id>/', views.add_to_watchlist, name='add_to_watchlist'),
+    path('movie/add_to_watchlist/<movie_id>/', views.add_to_watchlist_movie, name='add_to_watchlist_movie'),
+    path('tv/add_to_watchlist/<tv_id>/', views.add_to_watchlist_tv, name='add_to_watchlist_tv'),
     path('remove_from_watchlist/<movie_id>/', views.remove_from_watchlist, name='remove_from_watchlist'),
     path('watchlist/', views.watchlist, name='watchlist'),
 ]

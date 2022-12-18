@@ -74,13 +74,7 @@
 				</div>
 				<!-- end content -->
 
-				<!-- player -->
-				<div class="col-12 col-xl-6">
-                    <iframe width="425" height="349" src="http://www.youtube.com/embed/{{ tv_movie.key }}" frameborder="0" allowfullscreen></iframe> 
-				</div>
-				<!-- end player -->
-
-                <div>
+                <div style="margin-top: -2rem;margin-left: 1rem;">
                     {% if watchlist_instance %}
                     <a href="{% url 'remove_from_watchlist' data.id %}">
                         <button type="button" class="form__btn" style="width: 13rem;">
@@ -96,8 +90,15 @@
                     {% endif %}
                 </div>
 
+				<!-- player -->
+				<div class="col-12 col-xl-6" style="margin-top: 3rem">
+                    <iframe width="425" height="349" src="http://www.youtube.com/embed/{{ tv_movie.key }}" frameborder="0" allowfullscreen></iframe> 
+				</div>
+				<!-- end player -->
+
+
 				<!-- accordion -->
-				<div class="col-12 col-xl-6">
+				<div class="col-12 col-xl-6" style="margin-top: 3rem">
 					<div class="accordion" id="accordion">
                         {% for season in data.seasons %}
 						<div class="accordion__card">

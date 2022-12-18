@@ -180,11 +180,11 @@ def tv_show_make_comment(request, tv_id):
     comments = Comment.objects.filter(movie_id=tv_id)
     return render(request, 'core/details.html', {'comments': comments})
 
-def add_to_watchlist(request, movie_id):
+def add_to_watchlist_movie(request, movie_id):
     context = {}
     user = request.user
     if user.is_authenticated:
-        if not Watchlist.objects.create(user=user, movie_id=movie_id).exists():
+        if not Watchlist.objects.filter(user=user, movie_id=movie_id).exists():
             instance = Watchlist.objects.create(user=user, movie_id=movie_id)
             context['instance'] = instance
             # bool = True
@@ -192,6 +192,18 @@ def add_to_watchlist(request, movie_id):
         return HttpResponse('You must be authenticated before you can add movies to your watchlist')
     return render(request, 'core/details1.html', context)
     # return JsonResponse(bool, safe=False)
+
+def add_to_watchlist_tv(request, tv_id):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        if not Watchlist.objects.filter(user=user, movie_id=movie_id).exists():
+            instance = Watchlist.objects.create(user=user, movie_id=movie_id)
+            context['instance'] = instance
+            # bool = True
+    else:
+        return HttpResponse('You must be authenticated before you can add movies to your watchlist')
+    return render(request, 'core/details2.html', context)
 
 def remove_from_watchlist(request, movie_id):
     user = request.user
