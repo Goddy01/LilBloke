@@ -34,9 +34,9 @@
                 </div>
                 <div class="col-12">
                     <div class="header__search-content">
-                        <select name="type" id="" style="background-color: #FF5688;border: none;padding: 1rem;color: white;">
+                        <select name="watch_type" id="" style="background-color: #FF5688;border: none;padding: 1rem;color: white;">
                             <option value="tv">TV Shows</option>
-                            <option value="movie">Movies</option>
+                            <option value="movies">Movies</option>
                         </select>
                         <button type="submit">submit</button>
                     </div>
@@ -49,15 +49,31 @@
 							<div class="col-12 col-sm-4">
 								<div class="card__cover">
 									<img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="">
+                                    {% if request.GET.watch_type == 'movies' %}
 									<a href="{% url 'movie_details' movie.id %}" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
+                                    {% else %}
+                                    <a href="{% url 'tv_details' movie.id %}" class="card__play">
+										<i class="icon ion-ios-play"></i>
+									</a>
+                                    {% endif %}
 								</div>
 							</div>
 
 							<div class="col-12 col-sm-8">
 								<div class="card__content">
-									<h3 class="card__title"><a href="{% url 'movie_details' movie.id %}">{{ movie.title }}</a></h3>
+									<h3 class="card__title">
+                                        {% if request.GET.watch_typ == .movies %}
+                                        <a href="{% url 'movie_details' movie.id %}">
+                                            {{ movie.title }}
+                                        </a>
+                                        {% else %}
+                                        <a href="{% url 'tv_details' movie.id %}">
+                                            {{ movie.original_name }}
+                                        </a>
+                                        {% endif %}
+                                    </h3>
 									<span class="card__category"></span>
 
 									<div class="card__wrap">
