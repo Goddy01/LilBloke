@@ -79,7 +79,6 @@ def tv_details(request, tv_id):
     similar_tv_shows = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     for season in data['seasons']:
         season = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/season/{season['season_number']}?api_key={TMDB_API_KEY}&language=en-US").json()
-        print('SEASONS: ', seasons)
         seasons[f"{season['season_number']}"] = season
     try:
         context['tv_movie'] = requests.get(f"https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key={TMDB_API_KEY}").json()['results'][0]
@@ -223,7 +222,6 @@ def watchlist(request):
         if movie.movie_type == watch_type:
             movie_call = requests.get(f"https://api.themoviedb.org/3/{watch_type}/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json()
             watchlist_movies[f'{movie.movie_id}'] = movie_call
-            print('WISHLIST: ', watchlist_movies)
     return render(request, 'core/watchlist.html', {'watchlist_movies': watchlist_movies, 'watch_type': watch_type})
 
 def movie_gen(movie_id):
