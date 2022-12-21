@@ -65,7 +65,7 @@ def movie_details(request, movie_id):
         movie_key = None
     similar_movies = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     comments = Comment.objects.filter(movie_id=movie_id)
-    return render(request, 'details1.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies, 'comments': comments, 'watchlist_instance': watchlist_instance})
+    return render(request, 'movie_details.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies, 'comments': comments, 'watchlist_instance': watchlist_instance})
 
 
 def tv_details(request, tv_id):
@@ -89,7 +89,7 @@ def tv_details(request, tv_id):
     context['seasons'] = seasons
     context['data'] = data
     context['watchlist_instance'] = watchlist_instance
-    return render(request, 'details2.html', context)
+    return render(request, 'tv_details.html', context)
 
 # def get_latest_movies(request):
 #     latest_movies = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US")
@@ -193,7 +193,7 @@ def add_to_watchlist_movie(request, movie_id):
     else:
         return redirect('accounts:sign_in')
         # return HttpResponse('You must be authenticated before you can add movies to your watchlist')
-    return render(request, 'details1.html', context)
+    return render(request, 'movie_details.html', context)
     # return JsonResponse(bool, safe=False)
 
 def add_to_watchlist_tv(request, tv_id):
@@ -208,7 +208,7 @@ def add_to_watchlist_tv(request, tv_id):
         return redirect('watchlist')
     else:
         return HttpResponse('This Tv Show is already in your Watchlist')
-    return render(request, 'details2.html', context)
+    return render(request, 'tv_details.html', context)
 
 def remove_from_watchlist(request, movie_id):
     user = request.user
