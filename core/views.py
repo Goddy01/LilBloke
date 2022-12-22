@@ -51,7 +51,7 @@ def movies_search(request, q=None):
     else:
         return redirect('404')
 
-    return render(request, 'search_result.html', {'data': movies_data, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type'), 'page': request.POST.get('page')})
+    return render(request, 'core/search_result.html', {'data': movies_data, 'total_pages': movies_data['total_pages'], 'query': query, 'type': request.GET.get('type'), 'page': request.POST.get('page')})
 
 def movie_details(request, movie_id):
     try:
@@ -65,7 +65,7 @@ def movie_details(request, movie_id):
         movie_key = None
     similar_movies = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={TMDB_API_KEY}&language=en-US&page=1").json()
     comments = Comment.objects.filter(movie_id=movie_id)
-    return render(request, 'movie_details.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies, 'comments': comments, 'watchlist_instance': watchlist_instance})
+    return render(request, 'core/movie_details.html', {'data': data.json(), 'movie_key': movie_key, 'similar_movies': similar_movies, 'comments': comments, 'watchlist_instance': watchlist_instance})
 
 
 def tv_details(request, tv_id):
@@ -89,7 +89,7 @@ def tv_details(request, tv_id):
     context['seasons'] = seasons
     context['data'] = data
     context['watchlist_instance'] = watchlist_instance
-    return render(request, 'tv_details.html', context)
+    return render(request, 'core/tv_details.html', context)
 
 # def get_latest_movies(request):
 #     latest_movies = requests.get(f"https://api.themoviedb.org/3/movie/latest?api_key={TMDB_API_KEY}&language=en-US")
@@ -141,7 +141,7 @@ def movies_catalog(request):
             movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres={genre}").json()
     else:
         movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US").json()
-    return render(request, 'catalog1.html', {'movies_catalog': movies_catalog, 'page': page, 'total_pages': movies_catalog['total_pages'], 'genre': genre})
+    return render(request, 'core/movies_catalog.html', {'movies_catalog': movies_catalog, 'page': page, 'total_pages': movies_catalog['total_pages'], 'genre': genre})
 
 def tv_shows_catalog(request):
     genre = request.GET.get('genre')
@@ -153,7 +153,7 @@ def tv_shows_catalog(request):
             tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres={genre}").json()
     else:
         tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/tv/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US").json()
-    return render(request, 'tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog, 'page': page, 'total_pages': tv_shows_catalog['total_pages'], 'genre': genre})
+    return render(request, 'core/tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog, 'page': page, 'total_pages': tv_shows_catalog['total_pages'], 'genre': genre})
     
 def movie_make_comment(request, movie_id):
     if request.user.is_authenticated:
@@ -165,7 +165,7 @@ def movie_make_comment(request, movie_id):
     else:
         return HttpResponse('You must be authenticated to add comments.')
     comments = Comment.objects.filter(movie_id=movie_id)
-    return render(request, 'core/details.html', {'comments': comments})
+    return render(request, 'core/movie_details.html', {'comments': comments})
 
 def tv_show_make_comment(request, tv_id):
     if request.user.is_authenticated:
@@ -177,7 +177,7 @@ def tv_show_make_comment(request, tv_id):
     else:
         return HttpResponse('You must be authenticated to add comments.')
     comments = Comment.objects.filter(movie_id=tv_id)
-    return render(request, 'core/details.html', {'comments': comments})
+    return render(request, 'core/tv_details.html', {'comments': comments})
 
 def add_to_watchlist_movie(request, movie_id):
     context = {}

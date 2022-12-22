@@ -19,7 +19,6 @@ def sign_up(request):
     if request.method == 'POST':
         signup_form = forms.SignUpForm(request.POST)
         if signup_form.is_valid():
-            print('Valid asf')
             user = signup_form.save(commit=False)
             user.is_active = False
             user.save()
