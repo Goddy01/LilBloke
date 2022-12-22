@@ -134,25 +134,20 @@ def get_upcoming_tv_shows(request):
 def movies_catalog(request):
     genre = request.GET.get('genre') or 28
     page = request.POST.get('page') or 1
-    # if page:
+    
     if genre:
         movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page={page}&with_genres={genre}").json()
     else:
         movies_catalog = requests.get(f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US&page={page}").json()
-    # else:
-    #     movies_catalog = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc").json()
+    
     return render(request, 'core/movies_catalog.html', {'movies_catalog': movies_catalog, 'page': page, 'total_pages': movies_catalog['total_pages'], 'genre': genre})
 
 def tv_shows_catalog(request):
-    genre = request.GET.get('genre')
-    page = request.POST.get('page')
-    if genre:
-        if page:
-            tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page={page}&with_genres={genre}").json()
-        else:
-            tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres={genre}").json()
-    else:
-        tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/tv/top_rated?api_key={TMDB_API_KEY}&include_video=false&language=en-US").json()
+    genre = request.GET.get('genre') or 10759
+    page = request.POST.get('page') or 1
+    
+    tv_shows_catalog = requests.get(f"https://api.themoviedb.org/3/discover/tv?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page={page}&with_genres={genre}").json()
+    
     return render(request, 'core/tv_shows_catalog.html', {'tv_shows_catalog': tv_shows_catalog, 'page': page, 'total_pages': tv_shows_catalog['total_pages'], 'genre': genre})
     
 def movie_make_comment(request, movie_id):
