@@ -48,3 +48,7 @@ urlpatterns = [
     path('remove_from_watchlist/<movie_id>/', views.remove_from_watchlist, name='remove_from_watchlist'),
     path('watchlist/', views.watchlist, name='watchlist'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
