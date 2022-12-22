@@ -25,7 +25,7 @@ load_dotenv(find_dotenv())
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -91,11 +91,11 @@ if DEBUG:
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
-}
+    }
 else:
     DATABASES = {
     'default': dj_database_url.config(default=f"postgresql://{os.environ.get('PGUSER')}:{os.environ.get('PGPASSWORD')}@{os.environ.get('PGHOST')}:{os.environ.get('PGPORT')}/{os.environ.get('PGDATABASE')}", conn_max_age=600)
-}
+    }
 
 
 # Password validation
@@ -171,38 +171,7 @@ DEFAULT_FROM_EMAIL = 'Flixland Team <noreply@flixland.com>'
 AUTH_USER_MODEL = 'accounts.UserAccount'
 
 # TO PREVENT 400 ERROR
-LOGGING = {
-'version': 1,
-'disable_existing_loggers': False,
-'formatters': {
-    'verbose': {
-        'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-        'datefmt' : "%d/%b/%Y %H:%M:%S"
-    },
-    'simple': {
-        'format': '%(levelname)s %(message)s'
-    },
-},
-'handlers': {
-    'file': {
-        'level': 'DEBUG',
-        'class': 'logging.FileHandler',
-        'filename': 'mysite.log',
-        'formatter': 'verbose'
-    },
-},
-'loggers': {
-    'django': {
-        'handlers':['file'],
-        'propagate': True,
-        'level':'DEBUG',
-    },
-    'MYAPP': {
-        'handlers': ['file'],
-        'level': 'DEBUG',
-    },
-}
-}
+
 
 # AWS CONFIGURATION
 if not DEBUG:
@@ -230,3 +199,36 @@ if not DEBUG:
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
     DEBUG_PROPAGATE_EXCEPTIONS = True
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+                'datefmt' : "%d/%b/%Y %H:%M:%S"
+            },
+            'simple': {
+                'format': '%(levelname)s %(message)s'
+            },
+        },
+        'handlers': {
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': 'mysite.log',
+                'formatter': 'verbose'
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers':['file'],
+                'propagate': True,
+                'level':'DEBUG',
+            },
+            'MYAPP': {
+                'handlers': ['file'],
+                'level': 'DEBUG',
+            },
+        }
+        }
