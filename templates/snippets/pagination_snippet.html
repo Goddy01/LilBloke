@@ -1,42 +1,43 @@
 <!-- paginator -->
-{% if results.has_other_pages %}
 <div class="col-12">
     <ul class="paginator">
-        {% if results.has_previous %}
-        <li class="paginator__item paginator__item--prev">
-            <a href="?{% if query %}query={{query}}&{% endif %}page={{results.previous_page_number}}"><i class="icon ion-ios-arrow-back"></i></a>
-        </li>
-        {% endif %}
-        {% for i in results.paginator.page_range %}
-        {% if results.number == i %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="text" name="page" size="1" style="background-color: #FF5695;color: white;font-weight: bold;width: 2rem;margin-right: 1rem;" 
+            {% if page %}
+            value="{{ page }}"
+            {% else %}
+            value = "1"
+            {% endif %}
+            id="page">
+        </form>
+        <!-- <li class="paginator__item paginator__item--prev">
+            <a href="">
+                
+                
+            </a>
+        </li> -->
         <!-- <li class="paginator__item"><a href="#"></a></li> -->
-        <li class="paginator__item paginator__item--active">
+        <li class="paginator__item paginator__item--active" style="margin-right: 1rem;">
             <a href="#">
-                <span>
-                    {{ i }}
-                    <span>(current)</span>
-                </span>
+                <span>of</span>
             </a>
         </li>
-        {% else %}
-        <li class="paginator__item">
-            <a href="?{% if query %}query={{query}}&{% endif %}page={{ i }}">{{ i }}</a>
-        </li>
-        {% endif %}
-        {% endfor %}
-
-        {% if results.has_next %}
+        <!-- <li class="paginator__item">
+            <a href=""></a>
+        </li> -->
         <li class="paginator__item paginator__item--next">
-            <a href="?{% if query %}query={{query}}&{% endif %}page={{ results.next_page_number }}"><i class="icon ion-ios-arrow-forward"></i></a>
+            <a href="">
+                <!-- <i class="icon ion-ios-arrow-forward"></i> -->
+                <b style="color: white;">{{ total_pages }}</b>
+            </a>
         </li>
-        <li class="paginator__item">
-            <a href="?{% if query %}query={{query}}&{% endif %}page={{ results.paginator.num_pages }}">
+        <!-- <li class="paginator__item">
+            <a href="">
                 <i class="icon ion-ios-arrow-forward"></i>
                 <i class="icon ion-ios-arrow-forward"></i>
             </a>
-        </li>
-        {% endif %}
+        </li> -->
     </ul>
 </div>
-{% endif %}
 <!-- end paginator -->
