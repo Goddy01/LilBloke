@@ -27,7 +27,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['flixgo.up.railway.app']
+CSRF_TRUSTED_ORIGINS=['https://flixgo.up.railway.app', ]
 
 
 # Application definition
