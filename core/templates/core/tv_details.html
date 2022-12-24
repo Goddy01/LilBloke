@@ -56,8 +56,20 @@
                                             {% endif %}
                                             {% endfor %}
                                         </li>
-										<li><span style="font-weight: bold;">Release Date:</span>{{ data.first_air_date }}</li>
-										<li><span style="font-weight: bold;">Last Air Date:</span>{{ data.last_air_date }}</li>
+										<li><span style="font-weight: bold;">Release Date:</span>
+                                            {% if data.first_air_date %}
+                                            {{ data.first_air_date }}
+                                            {% else %}
+                                            -
+                                            {% endif %}
+                                        </li>
+										<li><span style="font-weight: bold;">Last Air Date:</span>
+                                            {% if data.last_air_date %}
+                                            {{ data.last_air_date }}
+                                            {% else %}
+                                            -
+                                            {% endif %}
+                                        </li>
 										<li><span style="font-weight: bold;">Number of Seasons:</span>{{ data.seasons|length }}</li>
 										<li><span style="font-weight: bold;">Number of Episodes:</span>{{ data.number_of_episodes }}</li>
 										<li><span style="font-weight: bold;">Status: </span>{{ data.status }}</li>
@@ -108,7 +120,7 @@
                                         {% if season.air_date %}
                                         {{ season.air_date }}
                                         {% else %}
-                                        (Not provided)
+                                        -
                                         {% endif %}
                                     </span>
                                 </button>
@@ -131,7 +143,13 @@
                                                     <tr>
                                                         <th>{{ episode.episode_number }}</th>
                                                         <td>{{ episode.name }}</td>
-                                                        <td>{{ episode.air_date }}</td>
+                                                        <td>
+                                                            {% if episode.air_date %}
+                                                            {{ episode.air_date }}
+                                                            {% else %}
+                                                            -
+                                                            {% endif %}
+                                                        </td>
                                                         </a>
                                                     </tr>
                                                 {% endfor %}
