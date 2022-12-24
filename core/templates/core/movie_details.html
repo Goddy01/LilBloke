@@ -4,12 +4,15 @@
 {% block content %}
 	<!-- details -->
 	<section class="section details">
+        <div class="container">
+            <a href="{{ request.META.HTTP_REFERER }}" style="color: white;"><i class="icon ion-ios-arrow-round-back" style="color: #DF4E8C;font-size: 29px;font-weight: bold;"></i></a>
+        </div>
 		<!-- details background -->
 		<div class="details__bg" data-bg="{% static 'img/home/home__bg.jpg' %}"></div>
 		<!-- end details background -->
 
 		<!-- details content -->
-		<div class="container">
+        <div class="container" style="margin-top: 2rem;">
 			<div class="row">
 				<!-- title -->
 				<div class="col-12">
