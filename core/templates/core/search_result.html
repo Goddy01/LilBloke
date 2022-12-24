@@ -48,7 +48,7 @@
                                 <h3 class="card__title"><a href="#">
                                     {% if request.GET.type == 'movie' %}
                                     <a href="{% url 'movie_details' datum.id %}">
-                                        {{ datum.original_title }}
+                                        {{ datum.title }}
                                     </a>
                                     {% else %}
                                     <a href="{% url 'tv_details' datum.id %}">
