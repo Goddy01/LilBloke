@@ -52,7 +52,9 @@
 										    <a>{{ genre.name }}</a>
                                             {% endfor %}
                                         </li>
-										<li><span>Release Date:</span>{{ data.release_date }}</li>
+										<li><span>Release Date:</span>
+                                            {{ data.release_date }}
+                                        </li>
 										<li><span>Running time:</span> {{ data.runtime }} min</li>
 									</ul>
 
@@ -145,7 +147,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-lg-8 col-xl-8">
-					<!-- content tabs -->
+					<!-- content tabs    -->
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
 							<div class="row">
@@ -162,7 +164,7 @@
 													<span class="comments__time">{{ comment.created_at }}</span>
 												</div>
 												<p class="comments__text">{{ comment.comment }}</p>
-												<div class="comments__actions">
+												<!-- <div class="comments__actions"> -->
 													<!-- <div class="comments__rate">
 														<button type="button"><i class="icon ion-md-thumbs-up"></i>12</button>
 
@@ -171,7 +173,7 @@
 
 													<!-- <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
 													<button type="button"><i class="icon ion-ios-quote"></i>Quote</button> -->
-												</div>
+												<!-- </div> -->
 											</li>
                                             {% endfor %}
                                             {% else %}
@@ -207,7 +209,7 @@
                         {% if not forloop.counter > 6 %}
                         {% if similar_movie.id != data.id %}
 						<!-- card -->
-						<div class="col-12 col-sm-4 col-lg-6">
+						<div class="col-6 col-sm-4 col-lg-6">
 							<div class="card">
 								<div class="card__cover">
 									<img src="https://image.tmdb.org/t/p/w500/{{ similar_movie.poster_path }}" alt="">
