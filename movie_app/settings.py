@@ -32,8 +32,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ['flixgo.up.railway.app']
-# CSRF_TRUSTED_ORIGINS=['https://flixgo.up.railway.app', ]
+ALLOWED_HOSTS = ['movie-app-acva.onrender.com']
+CSRF_TRUSTED_ORIGINS=['https://movie-app-acva.onrender.com', ]
 
 
 # Application definition
