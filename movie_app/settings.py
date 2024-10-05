@@ -103,9 +103,9 @@ if DEBUG:
         }
     }
 else:
-    DATABASES = {'default': 
-             dj_database_url.config(default=f"postgresql://{os.environ.get('PGUSER')}:{os.environ.get('PGPASSWORD')}@{os.environ.get('PGHOST')}:{os.environ.get('PGPORT')}/{os.environ.get('PGDATABASE')}", conn_max_age=600)
-             }
+    DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DB_PUBLIC_URL'), conn_max_age=600)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
