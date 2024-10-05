@@ -32,8 +32,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['flixgo.up.railway.app']
-CSRF_TRUSTED_ORIGINS=['https://flixgo.up.railway.app', ]
+# ALLOWED_HOSTS = ['flixgo.up.railway.app']
+# CSRF_TRUSTED_ORIGINS=['https://flixgo.up.railway.app', ]
 
 
 # Application definition
@@ -92,8 +92,19 @@ WSGI_APPLICATION = 'movie_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config(default=f"postgresql://{os.environ.get('PGUSER')}:{os.environ.get('PGPASSWORD')}@{os.environ.get('PGHOST')}:{os.environ.get('PGPORT')}/{os.environ.get('PGDATABASE')}", conn_max_age=600)}
+# DATABASES = {'default': 
+#              dj_database_url.config(default=f"postgresql://{os.environ.get('PGUSER')}:{os.environ.get('PGPASSWORD')}@{os.environ.get('PGHOST')}:{os.environ.get('PGPORT')}/{os.environ.get('PGDATABASE')}", conn_max_age=600)
+#              }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        'TEST': {
+            'NAME': BASE_DIR / 'db.sqlite3',
+            },
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
